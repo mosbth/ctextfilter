@@ -40,3 +40,8 @@ spl_autoload_register(function ($class) {
         require $file;
     }
 });
+
+
+
+is_file(__DIR__ . "/vendor/autoload.php")
+    && include __DIR__ . "/vendor/autoload.php";

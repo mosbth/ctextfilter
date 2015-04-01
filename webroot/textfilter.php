@@ -1,34 +1,54 @@
 <?php
-/**
- * This is a Anax pagecontroller.
- *
- */
-// Include the essential config-file which also creates the $anax variable with its defaults.
-include(__DIR__.'/config.php');
+include(__DIR__.'/../autoload.php');
 
 
 // Prepare the content
-$html = <<<EOD
-Detta är ett exempel på markdown
+$text = <<<EOD
+My Article
 =================================
 
-En länk till [Markdowns hemsida](http://daringfireball.net/projects/markdown/).
+This is an example on writing text and filtering it to become HTML.
+
+
+
+Markdown used
+---------------------------------
+
+The class uses markdown and a external PHP class [php-markdown}(http://daringfireball.net/projects/markdown/).
+
+
+
+Clickable
+---------------------------------
+
+Som links can become clickable links, such as this to http://example.com/.
+
+
+
+BBCode
+---------------------------------
+
+BBCode [i]is supported[/i] with some [b]limited tags[/b], but quite easy to extend.
+
+
+
+ShortCode
+---------------------------------
+
+These are own *shortcodes* such as this image with a caption, wrapped in a `<figure>` element.
+
+[FIGURE src="https://www.gravatar.com/avatar/67aaf77308040cd57f0eba43e9f5404a?s=200" caption="Me with a caption."]
 
 EOD;
 
 
 
 // Filter the content
-$filter = new CTextFilter();
-$html = $filter->doFilter($html, "markdown");
+$filter = new \Mos\TextFilter\CTextFilter();
+$html = $filter->doFilter($text, "markdown, shortcode, clickable, bbcode");
+?>
 
-
-
-// Do it and store it all in variables in the Anax container.
-$anax['title'] = "Kasta tärning";
-$anax['main'] = $html;
-
-
-
-// Finally, leave it all to the rendering phase of Anax.
-include(ANAX_THEME_PATH);
+<!doctype html>
+<meta charset="utf-8">
+<title>Example on Mos\TextFilter</title>
+<?=$html?>
