@@ -15,6 +15,13 @@ By Mikael Roos, mos@dbweb.se.
 
 
 
+License 
+------------------
+
+This software is free software and carries a MIT license.
+
+
+
 Install 
 ------------------
 
@@ -23,13 +30,6 @@ Install
 ```
 require: "mos/ctextfilter": "dev-master"
 ```
-
-
-
-License 
-------------------
-
-This software is free software and carries a MIT license.
 
 
 
@@ -45,6 +45,13 @@ Add above using composer.
 ```
 composer require
 ```
+
+
+
+Usage 
+------------------
+
+See the sample-program in `webroot`, check the test cases in `test` and review the source code of the class itself.
 
 
 
