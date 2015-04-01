@@ -36,7 +36,7 @@ class CTextFilter
             if (isset($callbacks[$key])) {
                 $text = call_user_func_array(array($this, $callbacks[$key]), array($text));
             } else {
-                throw new Exception("The filter '$filters' is not a valid filter string. Its the key '$key' that is unknown and it does not match a valid callback.");
+                throw new \Exception("The filter '$filters' is not a valid filter string. Its the key '$key' that is unknown and it does not match a valid callback.");
             }
         }
 
@@ -112,7 +112,7 @@ class CTextFilter
      */
     public function markdown($text)
     {
-        require_once __DIR__ . "/php-markdown/Michelf/MarkdownExtra.inc.php";
+        #require_once __DIR__ . "/php-markdown/Michelf/MarkdownExtra.inc.php";
         return \Michelf\MarkdownExtra::defaultTransform($text);
     }
 

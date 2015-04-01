@@ -11,9 +11,13 @@
 .Spotlight-V100
 .Trashes
 Icon?
-ehthumbs.db
+thumbs.db
 Thumbs.db
 
 # phpunit
 coverage.clover
 coverage/
+
+# composer
+composer.lock
+vendor/
