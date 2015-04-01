@@ -1,0 +1,11 @@
+imports:
+    - php
+
+build:
+    tests:
+        override:
+            -
+                command: 'phpunit'
+                coverage:
+                    file: 'coverage.clover'
+                    format: 'php-clover'

@@ -1,0 +1,22 @@
+{
+    "name": "mos/ctextfilter",    
+    "type": "library",
+    "description": "PHP classes for text filtering and formatting to HTML",
+    "keywords": ["bbcode", "shortcode", "markdown", "education"],
+    "homepage": "http://dbwebb.se",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mikael Roos",
+            "email": "mos@dbwebb.se",
+            "homepage": "http://mikaelroos.se",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "autoload": {
+        "psr-4": { "Mos\\": "src/" }
+    }
+}

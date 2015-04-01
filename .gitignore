@@ -1,0 +1,19 @@
+# Logs and databases #
+######################
+*.sqlite
+*.log
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# phpunit
+coverage.clover
+coverage/
