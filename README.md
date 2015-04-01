@@ -1,3 +1,4 @@
+[![Latest Stable Version](https://poser.pugx.org/leaphly/cart-bundle/version.svg)](https://packagist.org/packages/leaphly/cart-bundle) [![Latest Unstable Version](https://poser.pugx.org/leaphly/cart-bundle/v/unstable.svg)](//packagist.org/packages/leaphly/cart-bundle) [![Total Downloads](https://poser.pugx.org/leaphly/cart-bundle/downloads.svg)](https://packagist.org/packages/leaphly/cart-bundle)
 [![Build Status](https://travis-ci.org/mosbth/ctextfilter.svg)](https://travis-ci.org/mosbth/ctextfilter)
 [![Build Status](https://scrutinizer-ci.com/g/mosbth/ctextfilter/badges/build.png?b=master)](https://scrutinizer-ci.com/g/mosbth/ctextfilter/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mosbth/ctextfilter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mosbth/ctextfilter/?branch=master)
