@@ -176,7 +176,7 @@ class CTextFilter
         $res = array();
         foreach ($matches[0] as $match) {
             $pos = strpos($match, '=');
-            if ($pos == false) {
+            if ($pos === false) {
                 $res[$match] = true;
             } else {
                 $key = substr($match, 0, $pos);
@@ -201,22 +201,21 @@ class CTextFilter
      */
     public static function shortCodeFigure($options)
     {
-        extract(
-            array_merge(
-                [
-                    'id' => null,
-                    'class' => null,
-                    'src' => null,
-                    'title' => null,
-                    'alt' => null,
-                    'caption' => null,
-                    'href' => null,
-                    'nolink' => false,
-                ],
-                CTextFilter::ShortCodeInit($options)
-            ),
-            EXTR_SKIP
+        // Merge incoming options with default and expose as variables
+        $options= array_merge(
+            [
+                'id' => null,
+                'class' => null,
+                'src' => null,
+                'title' => null,
+                'alt' => null,
+                'caption' => null,
+                'href' => null,
+                'nolink' => false,
+            ],
+            CTextFilter::ShortCodeInit($options)
         );
+        extract($options, EXTR_SKIP);
 
         $id = $id ? " id='$id'" : null;
         $class = $class ? " class='figure $class'" : " class='figure'";
