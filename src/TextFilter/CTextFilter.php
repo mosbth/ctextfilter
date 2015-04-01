@@ -19,13 +19,13 @@ class CTextFilter
     public function doFilter($text, $filters)
     {
         // Define all valid filters with their callback function.
-        $callbacks = array(
+        $callbacks = [
             'bbcode'    => 'bbcode2html',
             'clickable' => 'makeClickable',
             'markdown'  => 'markdown',
             'nl2br'     => 'nl2br',
             'shortcode' => 'shortCode',
-        );
+        ];
 
         // Make an array of the comma separated string $filters
         $filter = preg_replace('/\s/', '', explode(',', $filters));
@@ -33,11 +33,10 @@ class CTextFilter
         // For each filter, call its function with the $text as parameter.
         foreach ($filter as $key) {
 
-            if (isset($callbacks[$key])) {
-                $text = call_user_func_array(array($this, $callbacks[$key]), array($text));
-            } else {
+            if (!isset($callbacks[$key])) {
                 throw new \Exception("The filter '$filters' is not a valid filter string. Its the key '$key' that is unknown and it does not match a valid callback.");
             }
+            $text = call_user_func_array([$this, $callbacks[$key]], [$text]);
         }
 
         return $text;
@@ -56,23 +55,23 @@ class CTextFilter
      */
     public function bbcode2html($text)
     {
-        $search = array(
+        $search = [
             '/\[b\](.*?)\[\/b\]/is',
             '/\[i\](.*?)\[\/i\]/is',
             '/\[u\](.*?)\[\/u\]/is',
             '/\[img\](https?.*?)\[\/img\]/is',
             '/\[url\](https?.*?)\[\/url\]/is',
             '/\[url=(https?.*?)\](.*?)\[\/url\]/is'
-        );
+        ];
 
-        $replace = array(
+        $replace = [
             '<strong>$1</strong>',
             '<em>$1</em>',
             '<u>$1</u>',
             '<img src="$1" />',
             '<a href="$1">$1</a>',
             '<a href="$1">$2</a>'
-        );
+        ];
 
         return preg_replace($search, $replace, $text);
     }
@@ -112,7 +111,6 @@ class CTextFilter
      */
     public function markdown($text)
     {
-        #require_once __DIR__ . "/php-markdown/Michelf/MarkdownExtra.inc.php";
         return \Michelf\MarkdownExtra::defaultTransform($text);
     }
 
@@ -141,9 +139,9 @@ class CTextFilter
      */
     public function shortCode($text)
     {
-        $patterns = array(
+        $patterns = [
             '/\[(FIGURE)[\s+](.+)\]/',
-        );
+        ];
 
         return preg_replace_callback(
             $patterns,
@@ -165,12 +163,12 @@ class CTextFilter
 
 
     /**
-    * Init shortcode handling by preparing the option list to an array, for those using arguments.
-    *
-    * @param string $options for the shortcode.
-    *
-    * @return array with all the options.
-    */
+     * Init shortcode handling by preparing the option list to an array, for those using arguments.
+     *
+     * @param string $options for the shortcode.
+     *
+     * @return array with all the options.
+     */
     public static function shortCodeInit($options)
     {
         preg_match_all('/[a-zA-Z0-9]+="[^"]+"|\S+/', $options, $matches);
@@ -205,7 +203,7 @@ class CTextFilter
     {
         extract(
             array_merge(
-                array(
+                [
                     'id' => null,
                     'class' => null,
                     'src' => null,
@@ -214,7 +212,7 @@ class CTextFilter
                     'caption' => null,
                     'href' => null,
                     'nolink' => false,
-                ),
+                ],
                 CTextFilter::ShortCodeInit($options)
             ),
             EXTR_SKIP

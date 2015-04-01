@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/mosbth/Anax-oophp.svg)](https://travis-ci.org/mosbth/Anax-oophp)
-[![Build Status](https://scrutinizer-ci.com/g/mosbth/Anax-oophp/badges/build.png?b=master)](https://scrutinizer-ci.com/g/mosbth/Anax-oophp/build-status/master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mosbth/Anax-oophp/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mosbth/Anax-oophp/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/mosbth/Anax-oophp/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/mosbth/Anax-oophp/?branch=master)
+[![Build Status](https://travis-ci.org/mosbth/ctextfilter.svg)](https://travis-ci.org/mosbth/ctextfilter)
+[![Build Status](https://scrutinizer-ci.com/g/mosbth/ctextfilter/badges/build.png?b=master)](https://scrutinizer-ci.com/g/mosbth/ctextfilter/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mosbth/ctextfilter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mosbth/ctextfilter/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/mosbth/ctextfilter/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/mosbth/ctextfilter/?branch=master)
 
 Mos\TextFilter
 ==========================
@@ -11,6 +11,17 @@ PHP module to parse text through a set of user-defined filters to format as HTML
 Anax-oophp is used as course material in the university course http://dbwebb.se/oophp.
 
 By Mikael Roos, mos@dbweb.se.
+
+
+
+Install 
+------------------
+
+[The package is available on Packagist](https://packagist.org/packages/mos/ctextfilter).
+
+```
+require: "mos/ctextfilter": "dev-master"
+```
 
 
 
@@ -33,15 +44,6 @@ Add above using composer.
 ```
 composer require
 ```
-
-
-
-History
------------------------------------
-
-v1.1.x (latest)
-
-* Moved from Anax-oophp and Anax-MVC into its own repo and onto packagist.
 
 
 
