@@ -1,3 +1,0 @@
-[submodule "src/CTextFilter/php-markdown"]
-	path = src/TextFilter/php-markdown
-	url = https://github.com/michelf/php-markdown.git

@@ -24,15 +24,20 @@ This software is free software and carries a MIT license.
 Use of external libraries
 -----------------------------------
 
-The following external modules are included and subject to its own license.
+The following external modules are needed and subject to its own license.
 
-* [michelf/php-markdown](https://github.com/michelf/php-markdown) (included as submodule)
+* Markdown - [michelf/php-markdown](https://github.com/michelf/php-markdown) 
+
+Add above using composer.
+
+```
+composer require
+```
 
 
 
 History
 -----------------------------------
-
 
 v1.1.x (latest)
 
@@ -40,8 +45,7 @@ v1.1.x (latest)
 
 
 
-------------------
+```
  .  
-..:
-
-Copyright (c) 2013-2015 Mikael Roos
+..:    Copyright (c) 2013-2015 Mikael Roos
+```
