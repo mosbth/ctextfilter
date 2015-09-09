@@ -15,9 +15,11 @@
     ],
     "require": {
         "php": ">=5.4",
-        "michelf/php-markdown": "1.5.0"
+        "michelf/php-markdown": "1.5.*"
     },
     "autoload": {
-        "psr-4": { "Mos\\": "src/" }
+        "psr-4": { 
+            "Mos\\TextFilter\\": "src/TextFilter"
+        }
     }
 }

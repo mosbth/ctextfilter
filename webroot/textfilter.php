@@ -1,5 +1,5 @@
 <?php
-include(__DIR__.'/../autoload.php');
+include(__DIR__.'/../vendor/autoload.php');
 
 
 // Prepare the content
@@ -14,7 +14,7 @@ This is an example on writing text and filtering it to become HTML.
 Markdown used
 ---------------------------------
 
-The class uses markdown and a external PHP class [php-markdown}(http://daringfireball.net/projects/markdown/).
+The class uses *markdown* and a external PHP class [php-markdown](http://daringfireball.net/projects/markdown/).
 
 
 
