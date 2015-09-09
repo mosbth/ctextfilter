@@ -40,12 +40,6 @@ The following external modules are needed and subject to its own license.
 
 * Markdown - [michelf/php-markdown](https://github.com/michelf/php-markdown) 
 
-Add above using composer.
-
-```
-composer require
-```
-
 
 
 Usage 
