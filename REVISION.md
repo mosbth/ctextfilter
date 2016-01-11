@@ -1,6 +1,11 @@
 History
 -----------------------------------
 
+v1.1.1* (2016-01-11)
+
+* Always treat filter string as lowercase string.
+
+
 v1.1.1 (2015-09-09)
 
 * Changing path to autoloader for composer.json.

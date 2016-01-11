@@ -28,6 +28,7 @@ class CTextFilter
         ];
 
         // Make an array of the comma separated string $filters
+        $filters = strtolower($filters);
         $filter = preg_replace('/\s/', '', explode(',', $filters));
 
         // For each filter, call its function with the $text as parameter.

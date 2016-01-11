@@ -30,6 +30,23 @@ class CTextFilterTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
+    public function testUppercase()
+    {
+        $filter = new CTextFilter();
+
+        $html = "Header\n=========";
+        $exp  = "<h1>Header</h1>\n";
+        $res = $filter->doFilter($html, "MARKDOWN");
+        $this->assertEquals($exp, $res, "Markdown <h1> failed: '$res'");
+    }
+
+
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
     public function testBBCode()
     {
         $filter = new CTextFilter();
