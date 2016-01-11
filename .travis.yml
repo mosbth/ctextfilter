@@ -35,11 +35,11 @@ matrix:
 
 
 before_script:
+    - composer update
 
 
 
 script:
-    # Run validation & publish
     - composer validate
     - phpunit
 
