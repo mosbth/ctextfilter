@@ -30,6 +30,57 @@ class CTextFilterTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
+    public function testMarkdownAndBBCode()
+    {
+        $filter = new CTextFilter();
+
+        $html = "Header[b]text[/b]\n=========";
+        $exp  = "<h1>Header<strong>text</strong></h1>\n";
+        $res = $filter->doFilter($html, "markdown, bbcode");
+        $this->assertEquals($exp, $res, "Markdown <h1> failed: '$res'");
+    }
+
+
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testMarkdownAndBBCodeAsArray()
+    {
+        $filter = new CTextFilter();
+
+        $html = "Header[b]text[/b]\n=========";
+        $exp  = "<h1>Header<strong>text</strong></h1>\n";
+        $res = $filter->doFilter($html, ["markdown", "bbcode"]);
+        $this->assertEquals($exp, $res, "Markdown <h1> failed: '$res'");
+    }
+
+
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testMarkdownArray()
+    {
+        $filter = new CTextFilter();
+
+        $html = "Header\n=========";
+        $exp  = "<h1>Header</h1>\n";
+        $res = $filter->doFilter($html, ["markdown"]);
+        $this->assertEquals($exp, $res, "Markdown <h1> failed: '$res'");
+    }
+
+
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
     public function testUppercase()
     {
         $filter = new CTextFilter();

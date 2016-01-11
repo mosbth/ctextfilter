@@ -1,9 +1,10 @@
 History
 -----------------------------------
 
-v1.1.1* (2016-01-11)
+v1.1.2 (2016-01-11)
 
-* Always treat filter string as lowercase string.
+* Support incoming filterstring as array, #4.
+* Always treat filter string as lowercase string, #6.
 
 
 v1.1.1 (2015-09-09)

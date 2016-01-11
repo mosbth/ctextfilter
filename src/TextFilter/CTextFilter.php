@@ -11,8 +11,9 @@ class CTextFilter
     /**
      * Call each filter.
      *
-     * @param string $text    the text to filter.
-     * @param string $filters as comma separated list of filter.
+     * @param string       $text    the text to filter.
+     * @param string|array $filters as comma separated list of filter,
+     *                              or filters sent in as array.
      *
      * @return string the formatted text.
      */
@@ -28,8 +29,12 @@ class CTextFilter
         ];
 
         // Make an array of the comma separated string $filters
-        $filters = strtolower($filters);
-        $filter = preg_replace('/\s/', '', explode(',', $filters));
+        if (is_array($filters)) {
+            $filter = $filters;
+        } else {
+            $filters = strtolower($filters);
+            $filter = preg_replace('/\s/', '', explode(',', $filters));
+        }
 
         // For each filter, call its function with the $text as parameter.
         foreach ($filter as $key) {
