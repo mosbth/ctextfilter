@@ -9,7 +9,32 @@ namespace Mos\TextFilter;
 class CTextFilter
 {
     /**
+     * Supported filters.
+     */
+    private $filters = [
+        "jsonfrontmatter",
+        "yamlfrontmatter",
+        "bbcode",
+        "clickable",
+        "shortcode",
+        "markdown",
+        "nl2br",
+        "purify",
+     ];
+
+
+
+     /**
+      * Current document parsed.
+      */
+    private $current;
+
+
+
+    /**
      * Call each filter.
+     *
+     * @deprecated deprecated since version 1.2 in favour of parse().
      *
      * @param string       $text    the text to filter.
      * @param string|array $filters as comma separated list of filter,
@@ -23,9 +48,10 @@ class CTextFilter
         $callbacks = [
             'bbcode'    => 'bbcode2html',
             'clickable' => 'makeClickable',
+            'shortcode' => 'shortCode',
             'markdown'  => 'markdown',
             'nl2br'     => 'nl2br',
-            'shortcode' => 'shortCode',
+            'purify'    => 'purify',
         ];
 
         // Make an array of the comma separated string $filters
@@ -40,12 +66,209 @@ class CTextFilter
         foreach ($filter as $key) {
 
             if (!isset($callbacks[$key])) {
-                throw new \Exception("The filter '$filters' is not a valid filter string. Its the key '$key' that is unknown and it does not match a valid callback.");
+                throw new Exception("The filter '$filters' is not a valid filter string due to '$key'.");
             }
             $text = call_user_func_array([$this, $callbacks[$key]], [$text]);
         }
 
         return $text;
+    }
+
+
+
+    /**
+     * Return an array of all filters supported.
+     *
+     * @return array with strings of filters supported.
+     */
+    public function getFilters()
+    {
+        return $this->filters;
+    }
+
+
+
+    /**
+     * Check if filter is supported.
+     *
+     * @param string $filter to use.
+     *
+     * @throws mos/TextFilter/Exception  when filter does not exists.
+     *
+     * @return boolean true if filter exists, false othwerwise.
+     */
+    public function hasFilter($filter)
+    {
+        return in_array($filter, $this->filters);
+    }
+
+
+
+    /**
+     * Call a specific filter and store its details.
+     *
+     * @param string $filter to use.
+     *
+     * @throws mos/TextFilter/Exception  when filter does not exists.
+     *
+     * @return string the formatted text.
+     */
+    private function parseFactory($filter)
+    {
+        // Define single tasks filter with a callback.
+        $callbacks = [
+            "bbcode"    => "bbcode2html",
+            "clickable" => "makeClickable",
+            "shortcode" => "shortCode",
+            "markdown"  => "markdown",
+            "nl2br"     => "nl2br",
+            "purify"    => "purify",
+        ];
+
+        // Do the specific filter
+        $text = $this->current->text;
+        switch ($filter) {
+            case "jsonfrontmatter":
+                $res = $this->jsonFrontMatter($text);
+                $this->current->text        = $res["text"];
+                $this->current->frontmatter = $res["frontmatter"];
+                break;
+
+            case "yamlfrontmatter":
+                $res = $this->yamlFrontMatter($text);
+                $this->current->text        = $res["text"];
+                $this->current->frontmatter = $res["frontmatter"];
+                break;
+
+            case "bbcode":
+            case "clickable":
+            case "shortcode":
+            case "markdown":
+            case "nl2br":
+            case "purify":
+                $this->current->text = call_user_func_array(
+                    [$this, $callbacks[$filter]],
+                    [$text]
+                );
+                break;
+
+            default:
+                throw new Exception("The filter '$filter' is not a valid filter     string.");
+        }
+    }
+
+
+
+    /**
+     * Call each filter and return array with details of the formatted content.
+     *
+     * @param string $text   the text to filter.
+     * @param array  $filter array of filters to use.
+     *
+     * @throws mos/TextFilter/Exception  when filterd does not exists.
+     *
+     * @return array with the formatted text and additional details.
+     */
+    public function parse($text, $filter)
+    {
+        $this->current = new \stdClass();
+        $this->current->frontmatter = null;
+        $this->current->text = $text;
+
+        foreach ($filter as $key) {
+            $this->parseFactory($key);
+        }
+
+        return $this->current;
+    }
+
+
+
+    /**
+     * Extract front matter from text.
+     *
+     * @param string $text       the text to be parsed.
+     * @param string $startToken the start token.
+     * @param string $stopToken  the stop token.
+     *
+     * @return array with the formatted text and the front matter.
+     */
+    private function extractFrontMatter($text, $startToken, $stopToken)
+    {
+        $tokenLength = strlen($startToken);
+
+        $start = strpos($text, $startToken);
+        
+        $frontmatter = null;
+        if ($start !== false) {
+            $stop = strpos($text, $stopToken, $tokenLength - 1);
+
+            if ($stop !== false) {
+                $length = $stop - ($start + $tokenLength);
+
+                $frontmatter = substr($text, $start + $tokenLength, $length);
+                $textStart = substr($text, 0, $start);
+                $text = $textStart . substr($text, $stop + $tokenLength);
+            }
+        }
+
+        return [$text, $frontmatter
+        ];
+    }
+
+
+
+    /**
+     * Extract JSON front matter from text.
+     *
+     * @param string $text the text to be parsed.
+     *
+     * @return array with the formatted text and the front matter.
+     */
+    public function jsonFrontMatter($text)
+    {
+        list($text, $frontmatter) = $this->extractFrontMatter($text, "{{{\n", "}}}\n");
+
+        if (!empty($frontmatter)) {
+            $frontmatter = json_decode($frontmatter, true);
+
+            if (is_null($frontmatter)) {
+                throw new Exception("Failed parsing JSON frontmatter.");
+            }
+        }
+
+        return [
+            "text" => $text,
+            "frontmatter" => $frontmatter
+        ];
+    }
+
+
+
+    /**
+     * Extract YAML front matter from text.
+     *
+     * @param string $text the text to be parsed.
+     *
+     * @return array with the formatted text and the front matter.
+     */
+    public function yamlFrontMatter($text)
+    {
+        $needle = "---\n";
+        list($text, $frontmatter) = $this->extractFrontMatter($text, $needle, $needle);
+
+        if (function_exists("yaml_parse") && !empty($frontmatter)) {
+            $frontmatter = yaml_parse($needle . $frontmatter);
+
+            if ($frontmatter === false) {
+                throw new Exception("Failed parsing YAML frontmatter.");
+            }
+        }
+
+        return [
+            "text" => $text,
+            "frontmatter" => $frontmatter
+        ];
     }
 
 
@@ -107,13 +330,31 @@ class CTextFilter
 
 
     /**
+     * Format text according to HTML Purifier.
+     *
+     * @param string $text that should be formatted.
+     *
+     * @return string as the formatted html-text.
+     */
+    public function purify($text)
+    {
+        $config   = \HTMLPurifier_Config::createDefault();
+        $config->set("Cache.DefinitionImpl", null);
+        //$config->set('Cache.SerializerPath', '/home/user/absolute/path');
+
+        $purifier = new \HTMLPurifier($config);
+    
+        return $purifier->purify($text);
+    }
+
+
+
+    /**
      * Format text according to Markdown syntax.
      *
      * @param string $text the text that should be formatted.
      *
      * @return string as the formatted html-text.
-     *
-     * @link http://dbwebb.se/coachen/skriv-for-webben-med-markdown-och-formattera-till-html-med-php
      */
     public function markdown($text)
     {
@@ -155,7 +396,7 @@ class CTextFilter
                 switch ($matches[1]) {
 
                     case 'FIGURE':
-                        return CTextFilter::ShortCodeFigure($matches[2]);
+                        return self::ShortCodeFigure($matches[2]);
                         break;
 
                     default:
@@ -219,7 +460,7 @@ class CTextFilter
                 'href' => null,
                 'nolink' => false,
             ],
-            CTextFilter::ShortCodeInit($options)
+            self::ShortCodeInit($options)
         );
         extract($options, EXTR_SKIP);
 
@@ -236,16 +477,16 @@ class CTextFilter
             $href = $pos ? substr($src, 0, $pos) : $src;
         }
 
-        $a_start = null;
-        $a_end = null;
+        $start = null;
+        $end = null;
         if (!$nolink) {
-            $a_start = "<a href='{$href}'>";
-            $a_end = "</a>";
+            $start = "<a href='{$href}'>";
+            $end = "</a>";
         }
 
         $html = <<<EOD
 <figure{$id}{$class}>
-{$a_start}<img src='{$src}' alt='{$alt}'{$title}/>{$a_end}
+{$start}<img src='{$src}' alt='{$alt}'{$title}/>{$end}
 <figcaption markdown=1>{$caption}</figcaption>
 </figure>
 EOD;

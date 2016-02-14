@@ -1,13 +1,25 @@
 History
+===================================
+
+v1.2.0 (2016-02-14)
 -----------------------------------
 
-v1.1.2 (2016-01-11)
+* Add support for HTMLPurifier, #1.
+* Add support for YAML front matter.
+* Add support for JSON front matter.
+* Improved handling of filters and added new front end `parse()`, #3.
+* Deprecated `doFilters()`.
 
-* Support incoming filterstring as array, #4.
+
+v1.1.2 (2016-01-11)
+-----------------------------------
+
+* Support incoming filter string as array, #4.
 * Always treat filter string as lowercase string, #6.
 
 
 v1.1.1 (2015-09-09)
+-----------------------------------
 
 * Changing path to autoloader for composer.json.
 * Changing version for phpmarkdown in composer.json to 1.5.x.
@@ -16,12 +28,6 @@ v1.1.1 (2015-09-09)
 
 
 v1.1.0 (2015-04-01)
+-----------------------------------
 
 * Moved from Anax-oophp and Anax-MVC into its own repo and onto packagist.
-
-
-
-```
- .  
-..:    Copyright (c) 2013-2015 Mikael Roos
-```

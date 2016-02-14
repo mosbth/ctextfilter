@@ -2,7 +2,7 @@
     "name": "mos/ctextfilter",    
     "type": "library",
     "description": "PHP classes for text filtering and formatting to HTML",
-    "keywords": ["bbcode", "shortcode", "markdown", "education"],
+    "keywords": ["bbcode", "shortcode", "markdown", "education", "yaml front matter", "json front matter", "html purifier"],
     "homepage": "http://dbwebb.se",
     "license": "MIT",
     "authors": [
@@ -15,7 +15,12 @@
     ],
     "require": {
         "php": ">=5.4",
-        "michelf/php-markdown": "1.5.*"
+        "michelf/php-markdown": "1.5.*",
+        "ezyang/htmlpurifier": "4.*",
+        "ext-json": "*"
+    },
+    "suggest": {
+        "ext-yaml": "*"
     },
     "autoload": {
         "psr-4": { 

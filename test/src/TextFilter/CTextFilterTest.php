@@ -9,6 +9,240 @@ namespace Mos\TextFilter;
 class CTextFilterTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * Supported filters.
+     */
+    private $standardFilters = [
+         'yamlfrontmatter',
+         'bbcode',
+         'clickable',
+         'markdown',
+         'nl2br',
+         'shortcode',
+     ];
+
+
+
+     /**
+      * Test.
+      *
+      * @expectedException /Mos/TextFilter/Exception
+      *
+      * @return void
+      */
+    public function testJsonFrontMatterException()
+    {
+        $filter = new CTextFilter();
+
+        $text = <<<EOD
+{{{
+
+}}}
+EOD;
+        $filter->parse($text, ["jsonfrontmatter"]);
+    }
+
+
+
+     /**
+      * Test.
+      *
+      * @return void
+      */
+    public function testJsonFrontMatter()
+    {
+        $filter = new CTextFilter();
+
+        $text = "";
+        $res = $filter->parse($text, ["jsonfrontmatter"]);
+        $this->assertNull($res->frontmatter, "Frontmatter should be null");
+        $this->assertEmpty($res->text, "Text should be empty");
+
+        $text = <<<EOD
+{{{
+}}}
+
+EOD;
+        $res = $filter->parse($text, ["jsonfrontmatter"]);
+        $this->assertEmpty($res->frontmatter, "Frontmatter should be empty");
+        $this->assertEmpty($res->text, "Text should be empty");
+
+        $txt = "TEXT";
+        $text = <<<EOD
+{{{
+{
+    "key": "value"
+}
+}}}
+$txt
+EOD;
+        $res = $filter->parse($text, ["jsonfrontmatter"]);
+        $this->assertEquals(
+            $res->frontmatter,
+            [
+                "key" => "value"
+            ],
+            "Frontmatter should be empty"
+        );
+        $this->assertEquals($txt, $res->text, "Text missmatch");
+    }
+
+
+
+    /**
+     * Test.
+     *
+     * @expectedException /Mos/TextFilter/Exception
+     *
+     * @return void
+     */
+    public function testYamlFrontMatterException()
+    {
+        $filter = new CTextFilter();
+
+        $text = <<<EOD
+---
+
+---
+EOD;
+        $filter->parse($text, ["yamlfrontmatter"]);
+    }
+
+
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testYamlFrontMatter()
+    {
+        $filter = new CTextFilter();
+
+        $text = "";
+        $res = $filter->parse($text, ["yamlfrontmatter"]);
+        $this->assertNull($res->frontmatter, "Frontmatter should be null");
+        $this->assertEmpty($res->text, "Text should be empty");
+
+        $text = <<<EOD
+---
+---
+
+EOD;
+        $res = $filter->parse($text, ["yamlfrontmatter"]);
+        $this->assertEmpty($res->frontmatter, "Frontmatter should be empty");
+        $this->assertEmpty($res->text, "Text should be empty");
+
+        $txt = "TEXT";
+        $text = <<<EOD
+---
+key: value
+---
+$txt
+EOD;
+        $res = $filter->parse($text, ["yamlfrontmatter"]);
+        $this->assertEquals(
+            $res->frontmatter,
+            [
+                "key" => "value"
+            ],
+            "Frontmatter not matching"
+        );
+        $this->assertEquals($txt, $res->text, "Text missmatch");
+
+        $text = <<<EOD
+---
+key1: value1
+key2: This is a long sentence.
+---
+My Article
+=================================
+
+This is an example on writing text and adding a YAML frontmatter.
+
+EOD;
+        $res = $filter->parse($text, ["yamlfrontmatter", "markdown"]);
+        //var_dump($res);
+        $this->assertEquals(
+            $res->frontmatter,
+            [
+                "key1" => "value1",
+                "key2" => "This is a long sentence."
+            ],
+            "Frontmatter not matching"
+        );
+        //$this->assertEquals($txt, $res->text, "Text missmatch");
+    }
+
+
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testGetFilters()
+    {
+        $filter = new CTextFilter();
+
+        $filters = $filter->getFilters();
+        $res = array_diff($this->standardFilters, $filters);
+        $this->assertTrue(empty($res), "Missmatch standard filters.");
+    }
+
+
+
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testHasFilter()
+    {
+        $filter = new CTextFilter();
+
+        $res = $filter->hasFilter("markdown");
+        $this->assertTrue($res, "Missmatch has filters.");
+    }
+
+
+
+
+    /**
+     * Test.
+     *
+     * @expectedException /Mos/TextFilter/Exception
+     *
+     * @return void
+     */
+    public function testHasFilterException()
+    {
+        $filter = new CTextFilter();
+
+        $filter->hasFilter("NOT EXISTING");
+    }
+
+
+
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testPurifier()
+    {
+        $filter = new CTextFilter();
+
+        $text = "Header\n=========";
+        $exp  = "<h1>Header</h1>\n";
+        $res = $filter->parse($text, ["markdown", "purify"]);
+        $this->assertEquals($exp, $res->text, "Purify failed");
+    }
+
+
+
+    /**
      * Test.
      *
      * @return void
@@ -182,6 +416,6 @@ EOD;
     public function testDoItException()
     {
         $filter = new CTextFilter();
-        $res = $filter->doFilter("void", "no-such-filter");
+        $filter->doFilter("void", "no-such-filter");
     }
 }

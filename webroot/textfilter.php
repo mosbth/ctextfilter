@@ -45,10 +45,10 @@ EOD;
 
 // Filter the content
 $filter = new \Mos\TextFilter\CTextFilter();
-$html = $filter->doFilter($text, "markdown, shortcode, clickable, bbcode");
+$document = $filter->parse($text, ["markdown", "shortcode", "clickable", "bbcode"]);
 ?>
 
 <!doctype html>
 <meta charset="utf-8">
 <title>Example on Mos\TextFilter</title>
-<?=$html?>
+<?=$document->text?>
