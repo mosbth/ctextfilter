@@ -97,6 +97,10 @@ EOD;
      */
     public function testYamlFrontMatterException()
     {
+        if (!function_exists("yaml_parse")) {
+            return;
+        }
+
         $filter = new CTextFilter();
 
         $text = <<<EOD
@@ -116,6 +120,10 @@ EOD;
      */
     public function testYamlFrontMatter()
     {
+        if (!function_exists("yaml_parse")) {
+            return;
+        }
+
         $filter = new CTextFilter();
 
         $text = "";

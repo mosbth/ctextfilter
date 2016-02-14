@@ -56,8 +56,8 @@ before_script:
     - install --mode 0755 phpmd.phar $PWD/bin/phpmd
 
     # Install phpunit
-    - wget https://phar.phpunit.de/phpunit.phar
-    - install --mode 0755 phpunit.phar $PWD/bin/phpunit
+    #- wget https://phar.phpunit.de/phpunit.phar
+    #- install --mode 0755 phpunit.phar $PWD/bin/phpunit
 
     # Download dbwebb-validate
     #- wget -O dbwebb-validate https://raw.githubusercontent.com/mosbth/dbwebb-cli/master/dbwebb2-validate
