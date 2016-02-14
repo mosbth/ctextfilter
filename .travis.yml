@@ -41,7 +41,7 @@ before_script:
 
     # Store all files in your own bin
     - mkdir bin
-    - export PATH=$PATH:$PWD/bin/
+    - export PATH=$PWD/bin/:$PATH
 
 
     # Install validation tools
@@ -54,7 +54,11 @@ before_script:
     # Install phpmd
     - wget -c http://static.phpmd.org/php/latest/phpmd.phar
     - install --mode 0755 phpmd.phar $PWD/bin/phpmd
-    
+
+    # Install phpunit
+    - wget https://phar.phpunit.de/phpunit.phar
+    - install --mode 0755 phpunit.phar $PWD/bin/phpunit
+
     # Download dbwebb-validate
     #- wget -O dbwebb-validate https://raw.githubusercontent.com/mosbth/dbwebb-cli/master/dbwebb2-validate
     #- install --mode 0755 dbwebb-validate $PWD/bin/dbwebb-validate
@@ -69,8 +73,6 @@ script:
     - node --version
     - npm --version
     
-    - phpcs --version
-    - phpmd --version
     #- jsonlint --version
     #- js-yaml --version
     #- shellcheck --version
@@ -79,6 +81,10 @@ script:
     #- cleancss --version
     #- uglifyjs --version
     
+    - phpcs --version
+    - phpmd --version
+    - phpunit --version
+
     # Run validation & publish
     #- dbwebb-validate --version
     #- dbwebb-validate --check
