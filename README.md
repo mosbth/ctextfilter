@@ -6,6 +6,7 @@ Mos\TextFilter
 [![Build Status](https://scrutinizer-ci.com/g/mosbth/ctextfilter/badges/build.png?b=master)](https://scrutinizer-ci.com/g/mosbth/ctextfilter/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mosbth/ctextfilter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mosbth/ctextfilter/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/mosbth/ctextfilter/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/mosbth/ctextfilter/?branch=master)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/d6da7502-0d81-4bd1-973e-b914ed1e9d9d/mini.png)](https://insight.sensiolabs.com/projects/d6da7502-0d81-4bd1-973e-b914ed1e9d9d)
 
 PHP class to parse text through a set of user-defined filters to format as HTML.
 
