@@ -123,7 +123,7 @@ class CTextFilter
             $this->current->frontmatter = [];
         }
 
-        $this->current->frontmatter = array_merge_recursive($this->current->frontmatter, $matter);
+        $this->current->frontmatter = array_merge($this->current->frontmatter, $matter);
         return $this;
     }
 

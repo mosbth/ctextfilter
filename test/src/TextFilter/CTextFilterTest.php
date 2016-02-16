@@ -55,6 +55,24 @@ class CTextFilterTest extends \PHPUnit_Framework_TestCase
         $res = $filter->parse($text, ["titlefromh1"]);
         $title = $res->frontmatter["title"];
         $this->assertEquals($exp, $title, "Title missmatch");
+
+        $text = <<<EOD
+{{{
+{
+    "title": "JSON title"
+}
+}}}
+<h1 class=''>My title</h1>
+EOD;
+        $exp = "JSON title";
+        $res = $filter->parse($text, ["titlefromh1", "jsonfrontmatter"]);
+        $title = $res->frontmatter["title"];
+        $this->assertEquals($exp, $title, "Title missmatch");
+
+        $exp = "My title";
+        $res = $filter->parse($text, ["jsonfrontmatter", "titlefromh1"]);
+        $title = $res->frontmatter["title"];
+        $this->assertEquals($exp, $title, "Title missmatch");
     }
 
 
