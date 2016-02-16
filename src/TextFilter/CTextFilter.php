@@ -168,7 +168,9 @@ class CTextFilter
             case "titlefromh1":
                 $title = $this->getTitleFromFirstH1($text);
                 $this->current->text = $text;
-                $this->addToFrontmatter(["title" => $title]);
+                if (!isset($this->current->frontmatter["title"])) {
+                    $this->addToFrontmatter(["title" => $title]);
+                }
                 break;
 
             case "bbcode":

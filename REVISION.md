@@ -5,6 +5,7 @@ v1.2.2* (2016-02-16)
 -----------------------------------
 
 * Fix title when both defined in frontmatter and titlefromh1.
+* Title defined in frontmatter overwrites titlefromh1
 
 
 v1.2.2 (2016-02-16)

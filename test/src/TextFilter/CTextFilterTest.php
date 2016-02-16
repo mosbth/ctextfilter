@@ -69,10 +69,43 @@ EOD;
         $title = $res->frontmatter["title"];
         $this->assertEquals($exp, $title, "Title missmatch");
 
-        $exp = "My title";
+        $exp = "JSON title";
         $res = $filter->parse($text, ["jsonfrontmatter", "titlefromh1"]);
         $title = $res->frontmatter["title"];
         $this->assertEquals($exp, $title, "Title missmatch");
+
+        $text = <<<EOD
+{{{
+{
+    "title": "JSON title"
+}
+}}}
+My title
+=================================
+
+This is the index page.
+EOD;
+        $exp = "JSON title";
+        $res = $filter->parse($text, ["jsonfrontmatter", "markdown", "titlefromh1"]);
+        $title = $res->frontmatter["title"];
+        $this->assertEquals($exp, $title, "Title missmatch");
+
+        $text = <<<EOD
+{{{
+{
+    "title-no": "JSON title"
+}
+}}}
+My title
+=================================
+
+This is the index page.
+EOD;
+        $exp = "My title";
+        $res = $filter->parse($text, ["jsonfrontmatter", "markdown", "titlefromh1"]);
+        $title = $res->frontmatter["title"];
+        $this->assertEquals($exp, $title, "Title missmatch");
+
     }
 
 
