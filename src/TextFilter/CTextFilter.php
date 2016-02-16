@@ -20,6 +20,7 @@ class CTextFilter
         "markdown",
         "nl2br",
         "purify",
+        "titlefromh1",
      ];
 
 
@@ -105,6 +106,30 @@ class CTextFilter
 
 
     /**
+     * Add array items to frontmatter.
+     *
+     * @param array|null $matter key value array with items to add
+     *                           or null if empty.
+     *
+     * @return $this
+     */
+    private function addToFrontmatter($matter)
+    {
+        if (empty($matter)) {
+            return $this;
+        }
+
+        if (is_null($this->current->frontmatter)) {
+            $this->current->frontmatter = [];
+        }
+
+        $this->current->frontmatter = array_merge_recursive($this->current->frontmatter, $matter);
+        return $this;
+    }
+
+
+
+    /**
      * Call a specific filter and store its details.
      *
      * @param string $filter to use.
@@ -130,14 +155,20 @@ class CTextFilter
         switch ($filter) {
             case "jsonfrontmatter":
                 $res = $this->jsonFrontMatter($text);
-                $this->current->text        = $res["text"];
-                $this->current->frontmatter = $res["frontmatter"];
+                $this->current->text = $res["text"];
+                $this->addToFrontmatter($res["frontmatter"]);
                 break;
 
             case "yamlfrontmatter":
                 $res = $this->yamlFrontMatter($text);
-                $this->current->text        = $res["text"];
-                $this->current->frontmatter = $res["frontmatter"];
+                $this->current->text = $res["text"];
+                $this->addToFrontmatter($res["frontmatter"]);
+                break;
+
+            case "titlefromh1":
+                $title = $this->getTitleFromFirstH1($text);
+                $this->current->text = $text;
+                $this->addToFrontmatter(["title" => $title]);
                 break;
 
             case "bbcode":
@@ -212,8 +243,7 @@ class CTextFilter
             }
         }
 
-        return [$text, $frontmatter
-        ];
+        return [$text, $frontmatter];
     }
 
 
@@ -269,6 +299,27 @@ class CTextFilter
             "text" => $text,
             "frontmatter" => $frontmatter
         ];
+    }
+
+
+
+    /**
+     * Get the title from the first H1.
+     *
+     * @param string $text the text to be parsed.
+     *
+     * @return string|null with the title, if its found.
+     */
+    public function getTitleFromFirstH1($text)
+    {
+        $matches = [];
+        $title = null;
+
+        if (preg_match("#<h1.*?>(.*)</h1>#", $text, $matches)) {
+            $title = strip_tags($matches[1]);
+        }
+
+        return $title;
     }
 
 

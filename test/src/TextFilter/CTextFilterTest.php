@@ -18,7 +18,44 @@ class CTextFilterTest extends \PHPUnit_Framework_TestCase
          'markdown',
          'nl2br',
          'shortcode',
+         'purify',
+         'titlefromh1',
      ];
+
+
+
+     /**
+      * Test.
+      *
+      * @return void
+      */
+    public function testTitleFromFirstH1()
+    {
+        $filter = new CTextFilter();
+
+        $text = "";
+        $res = $filter->parse($text, ["titlefromh1"]);
+        $title = $res->frontmatter["title"];
+        $this->assertNull($title, "Title should be null");
+
+        $text = "<h1>My title</h1>";
+        $exp = "My title";
+        $res = $filter->parse($text, ["titlefromh1"]);
+        $title = $res->frontmatter["title"];
+        $this->assertEquals($exp, $title, "Title missmatch");
+
+        $text = "<h1><a href=''>My title</a></h1>";
+        $exp = "My title";
+        $res = $filter->parse($text, ["titlefromh1"]);
+        $title = $res->frontmatter["title"];
+        $this->assertEquals($exp, $title, "Title missmatch");
+
+        $text = "<h1 class=''>My title</h1>";
+        $exp = "My title";
+        $res = $filter->parse($text, ["titlefromh1"]);
+        $title = $res->frontmatter["title"];
+        $this->assertEquals($exp, $title, "Title missmatch");
+    }
 
 
 
