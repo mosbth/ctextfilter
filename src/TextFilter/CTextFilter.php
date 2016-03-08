@@ -231,12 +231,18 @@ class CTextFilter
         $tokenLength = strlen($startToken);
 
         $start = strpos($text, $startToken);
-        
+        // Is a valid start?
+        if ($start !== false && $start !== 0) {
+            if ($text[$start - 1] !== "\n") {
+                $start = false;
+            }
+        }
+
         $frontmatter = null;
         if ($start !== false) {
             $stop = strpos($text, $stopToken, $tokenLength - 1);
 
-            if ($stop !== false) {
+            if ($stop !== false && $text[$stop - 1] === "\n") {
                 $length = $stop - ($start + $tokenLength);
 
                 $frontmatter = substr($text, $start + $tokenLength, $length);

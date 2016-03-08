@@ -255,9 +255,13 @@ My Article
 
 This is an example on writing text and adding a YAML frontmatter.
 
+Subheading
+---------------------------------
+
+More text.
+
 EOD;
         $res = $filter->parse($text, ["yamlfrontmatter", "markdown"]);
-        //var_dump($res);
         $this->assertEquals(
             $res->frontmatter,
             [
@@ -266,7 +270,21 @@ EOD;
             ],
             "Frontmatter not matching"
         );
-        //$this->assertEquals($txt, $res->text, "Text missmatch");
+
+        $text = <<<EOD
+My Article
+=================================
+
+This is an example on writing text and adding a YAML frontmatter.
+
+Subheading
+---------------------------------
+
+More text.
+
+EOD;
+        $res = $filter->parse($text, ["yamlfrontmatter", "markdown"]);
+        $this->assertEmpty($res->frontmatter, "Frontmatter should be empty");
     }
 
 
