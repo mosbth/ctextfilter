@@ -16,11 +16,117 @@ class CTextFilterTest extends \PHPUnit_Framework_TestCase
          'bbcode',
          'clickable',
          'markdown',
+         'geshi',
          'nl2br',
          'shortcode',
          'purify',
          'titlefromh1',
      ];
+
+
+
+     /**
+      * Test.
+      *
+      * @return void
+      */
+    public function testSyntaxHighlightGeshiMethod()
+    {
+        $filter = new CTextFilter();
+
+        $text = "";
+        $exp  = '<pre class="text geshi">&nbsp;</pre>';
+        $res = $filter->parse($text, ["geshi"]);
+        $this->assertEquals($exp, $res->text, "Geshi did not match");
+
+        $text = <<<'EOD'
+$php = "hi";
+EOD;
+        $exp  = '<pre class="text geshi">$php = &quot;hi&quot;;</pre>';
+        $res = $filter->parse($text, ["geshi"]);
+        $this->assertEquals($exp, $res->text, "Geshi did not match");
+
+        $text = <<<'EOD'
+$php = "hi";
+EOD;
+
+        // @codingStandardsIgnoreStart
+        $exp = <<<'EOD'
+<pre class="php geshi"><span class="re0">$php</span> <span class="sy0">=</span> <span class="st0">&quot;hi&quot;</span><span class="sy0">;</span></pre>
+EOD;
+        // @codingStandardsIgnoreEnd
+        $res = $filter->syntaxHighlightGeSHi($text, "php");
+        $this->assertEquals($exp, $res, "Geshi did not match");
+    }
+
+
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testSyntaxHighlightGeshiShortCode()
+    {
+        $filter = new CTextFilter();
+
+        $text = <<<'EOD'
+```text
+```
+
+EOD;
+        $exp = <<<'EOD'
+<pre class="text geshi">&nbsp;</pre>
+EOD;
+        $res = $filter->parse($text, ["shortcode"]);
+        $this->assertEquals($exp, $res->text, "Geshi did not match");
+
+        $text = <<<'EOD'
+```
+```
+
+EOD;
+        $exp = <<<'EOD'
+<pre class="text geshi">&nbsp;</pre>
+EOD;
+        $res = $filter->parse($text, ["shortcode"]);
+        $this->assertEquals($exp, $res->text, "Geshi did not match");
+
+        $text = <<<'EOD'
+```text
+$php = "hi";
+```
+
+EOD;
+        $exp = <<<'EOD'
+<pre class="text geshi">$php = &quot;hi&quot;;
+&nbsp;</pre>
+EOD;
+        $res = $filter->parse($text, ["shortcode"]);
+        $this->assertEquals($exp, $res->text, "Geshi did not match");
+
+        $text = <<<'EOD'
+```php
+$php = "hi";
+```
+
+EOD;
+        // @codingStandardsIgnoreStart
+        $exp = <<<'EOD'
+<pre class="php geshi"><span class="re0">$php</span> <span class="sy0">=</span> <span class="st0">&quot;hi&quot;</span><span class="sy0">;</span>
+&nbsp;</pre>
+EOD;
+        // @codingStandardsIgnoreEnd
+        $res = $filter->parse($text, ["shortcode"]);
+        $this->assertEquals($exp, $res->text, "Geshi did not match");
+
+        $text = <<<'EOD'
+```php
+$php = "hi";
+```
+
+EOD;
+    }
 
 
 

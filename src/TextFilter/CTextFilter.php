@@ -18,6 +18,7 @@ class CTextFilter
         "clickable",
         "shortcode",
         "markdown",
+        "geshi",
         "nl2br",
         "purify",
         "titlefromh1",
@@ -134,7 +135,7 @@ class CTextFilter
      *
      * @param string $filter to use.
      *
-     * @throws mos/TextFilter/Exception  when filter does not exists.
+     * @throws mos/TextFilter/Exception when filter does not exists.
      *
      * @return string the formatted text.
      */
@@ -146,6 +147,7 @@ class CTextFilter
             "clickable" => "makeClickable",
             "shortcode" => "shortCode",
             "markdown"  => "markdown",
+            "geshi"     => "syntaxHighlightGeSHi",
             "nl2br"     => "nl2br",
             "purify"    => "purify",
         ];
@@ -177,6 +179,7 @@ class CTextFilter
             case "clickable":
             case "shortcode":
             case "markdown":
+            case "geshi":
             case "nl2br":
             case "purify":
                 $this->current->text = call_user_func_array(
@@ -389,6 +392,30 @@ class CTextFilter
 
 
     /**
+     * Syntax highlighter using GeSHi http://qbnz.com/highlighter/.
+     *
+     * @param string $text     text to be converted.
+     * @param string $language which language to use for highlighting syntax.
+     *
+     * @return string the formatted text.
+     */
+    public function syntaxHighlightGeSHi($text, $language = "text")
+    {
+        $language = $language ?: "text";
+        $language = ($language === 'html') ? 'html4strict' : $language;
+        $geshi = new \GeSHi($text, $language);
+        $geshi->set_overall_class('geshi');
+        $geshi->enable_classes('geshi');
+        //$geshi->set_header_type(GESHI_HEADER_PRE_VALID);
+        //$geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+        //echo "<pre>", $geshi->get_stylesheet(false) , "</pre>"; exit;
+
+        return $geshi->parse_code();
+    }
+
+
+
+    /**
      * Format text according to HTML Purifier.
      *
      * @param string $text that should be formatted.
@@ -445,8 +472,22 @@ class CTextFilter
      */
     public function shortCode($text)
     {
+        /* Needs PHP 7
+        $patternsAndCallbacks = [
+            "/\[(FIGURE)[\s+](.+)\]/" => function ($match) {
+                return self::ShortCodeFigure($matches[2]);
+            },
+            "/(```([\w]*))\n([^`]*)```[\n]{1}/s" => function ($match) {
+                return $this->syntaxHighlightGeSHi($matches[3], $matches[2]);
+            },
+        ];
+
+        return preg_replace_callback_array($patternsAndCallbacks, $text);
+        */
+
         $patterns = [
-            '/\[(FIGURE)[\s+](.+)\]/',
+            "/\[(FIGURE)[\s+](.+)\]/",
+            "/(```)([\w]*)\n([^`]*)```[\n]{1}/s",
         ];
 
         return preg_replace_callback(
@@ -454,9 +495,13 @@ class CTextFilter
             function ($matches) {
                 switch ($matches[1]) {
 
-                    case 'FIGURE':
+                    case "FIGURE":
                         return self::ShortCodeFigure($matches[2]);
-                        break;
+                    break;
+
+                    case "```":
+                        return $this->syntaxHighlightGeSHi($matches[3], $matches[2]);
+                    break;
 
                     default:
                         return "{$matches[1]} is unknown shortcode.";

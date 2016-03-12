@@ -1,9 +1,10 @@
 History
 ===================================
 
-v1.2.2* (2016-02-16)
+v1.2.3 (2016-03-12)
 -----------------------------------
 
+* Added support for GeSHi syntax highligthing of code.
 * Fix title when both defined in frontmatter and titlefromh1.
 * Title defined in frontmatter overwrites titlefromh1
 

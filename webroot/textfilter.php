@@ -3,7 +3,7 @@ include(__DIR__.'/../vendor/autoload.php');
 
 
 // Prepare the content
-$text = <<<EOD
+$text = <<<'EOD'
 My Article
 =================================
 
@@ -39,13 +39,39 @@ These are own *shortcodes* such as this image with a caption, wrapped in a `<fig
 
 [FIGURE src="https://www.gravatar.com/avatar/67aaf77308040cd57f0eba43e9f5404a?s=200" caption="Me with a caption."]
 
+
+Source code syntax highlight
+---------------------------------
+
+
+
+###Text
+
+```text
+$php = true;
+if (isset($php)) {
+    echo "Yey";
+}
+```
+
+
+
+###PHP
+
+```php
+$php = true;
+if (isset($php)) {
+    echo "Yey";
+}
+```
+
 EOD;
 
 
 
 // Filter the content
 $filter = new \Mos\TextFilter\CTextFilter();
-$document = $filter->parse($text, ["markdown", "shortcode", "clickable", "bbcode"]);
+$document = $filter->parse($text, ["shortcode", "markdown", "clickable", "bbcode"]);
 ?>
 
 <!doctype html>

@@ -17,6 +17,7 @@
         "php": ">=5.4",
         "michelf/php-markdown": "1.5.*",
         "ezyang/htmlpurifier": "4.*",
+        "geshi/geshi": "dev-master",
         "ext-json": "*"
     },
     "suggest": {
