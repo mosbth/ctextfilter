@@ -606,4 +606,237 @@ EOD;
 
         return $html;
     }
+
+
+
+    /**
+     * Shortcode for [asciinema].
+     *
+     * @param string $code the code to process.
+     * @param string $options for the shortcode.
+     * @return array with all the options.
+     */
+/*    public static function ShortCodeAsciinema($options) {
+      extract(array_merge(array(
+        'id' => null,
+        'class' => null,
+        'src' => null,
+        'title' => null,
+        'alt' => null,
+        'caption' => null,
+      ), CTextFilter::ShortCodeInit($options)), EXTR_SKIP);
+
+      $id = $id ? " id='$id'" : null;
+      $class = $class ? " class='figure $class'" : " class='figure'";
+      $title = $title ? " title='$title'" : null;
+      
+      if(!$alt && $caption) {
+        $alt = $caption;
+      }
+
+      if(!$href) {
+        $pos = strpos($src, '?');
+        $href = $pos ? substr($src, 0, $pos) : $src;
+      }
+
+      $html = <<<EOD
+  <script type="text/javascript" src="https://asciinema.org/a/{$src}.js" id="asciicast-{$src}" async></script>
+  EOD;
+
+      return $html;
+    }
+*/
+
+
+
+/**
+ * Shortcode for including a SVG-image inside a <figure>.
+ *
+ * @param string $code the code to process.
+ * @param string $options for the shortcode.
+ * @return array with all the options.
+ */
+/*public static function ShortCodeSVGFigure($options) {
+  extract(array_merge(array(
+    'id' => null,
+    'class' => null,
+    'src' => null,
+    'path' => null,
+    'title' => null,
+    'alt' => null,
+    'caption' => null,
+    'href' => null,
+    'nolink' => false,
+  ), CTextFilter::ShortCodeInit($options)), EXTR_SKIP);
+
+  $id = $id ? " id='$id'" : null;
+  //$class = $class ? " class='$class'" : null;
+  $class = $class ? " class='figure $class'" : " class='figure'";
+  $title = $title ? " title='$title'" : null;
+  
+  if(!$alt && $caption) {
+    $alt = $caption;
+  }
+
+  if(!$href) {
+    $pos = strpos($src, '?');
+    $href = $pos ? substr($src, 0, $pos) : $src;
+  }
+
+  if(!$nolink) {
+    $a_start = "<a href='{$href}'>";
+    $a_end = "</a>";
+  }
+
+  // Import the file containing the svg-image
+  $svg = null;
+  
+  if($path[0] != '/') {
+    $path = self::$dir . '/' . $path;
+  }
+
+  if(is_file($path)) {
+    $svg = file_get_contents($path);
+  }
+  else {
+    $svg = "No such file: $path";
+  }
+  $html = <<<EOD
+<figure{$id}{$class}>
+{$svg}
+<figcaption markdown=1>{$caption}</figcaption>
+</figure>
+EOD;
+
+  return $html;
+}
+
+*/
+
+
+
+/**
+ * Shorttags to to quicker format text as HTML.
+ *
+ * @param string text text to be converted.
+ * @return string the formatted text.
+ */
+/*public static function ShortTags($text) {
+  $callback = function($matches) {
+    switch($matches[1]) {
+      case 'IMG':
+        $caption = t('Image: ');
+        $pos = strpos($matches[2], '?');
+        $href = $pos ? substr($matches[2], 0, $pos) : $matches[2];
+        $src = htmlspecialchars($matches[2]);
+        return <<<EOD
+<figure>
+<a href='{$href}'><img src='{$src}' alt='{$matches[3]}' /></a>
+<figcaption markdown=1>{$caption}{$matches[3]}</figcaption>
+</figure>
+EOD;
+
+      case 'IMG2':
+        $caption = null; //t('Image: ');
+        $pos = strpos($matches[2], '?');
+        $href = $pos ? substr($matches[2], 0, $pos) : $matches[2];
+        $src = htmlspecialchars($matches[2]);
+        return <<<EOD
+<figure class="{$matches[4]}">
+<a href='{$href}'><img src='{$src}' alt='{$matches[3]}' /></a>
+<figcaption markdown=1>{$caption}{$matches[3]}</figcaption>
+</figure>
+EOD;
+      case 'BOOK':
+        $isbn = $matches[2];
+        $stores = array(
+          'BTH' => "http://bth.summon.serialssolutions.com/?#!/search?ho=t&amp;q={$isbn}",
+          'Libris' => "http://libris.kb.se/hitlist?q={$isbn}",
+          'Google Books' => "http://books.google.com/books?q={$isbn}",
+          'Bokus' => "http://www.bokus.com/bok/{$isbn}",
+          'Adlibris' => "http://www.adlibris.com/se/product.aspx?isbn={$isbn}",
+          'Amazon' => "http://www.amazon.com/s/ref=nb_ss?url=field-keywords={$isbn}",
+          'Barnes&Noble' => "http://search.barnesandnoble.com/booksearch/ISBNInquiry.asp?r=1&IF=N&EAN={$isbn}",
+        );
+        $html = null;
+        foreach($stores as $key => $val) {
+          $html .= "<a href='$val'>$key</a> &bull; ";
+        }
+        return substr($html, 0, -8);
+      break;
+
+      case 'YOUTUBE':
+        $caption = t('Figure: ');
+        $height = ceil($matches[3] / (16/9));
+        return <<<EOD
+<figure>
+<iframe width='{$matches[3]}' height='{$height}' src="http://www.youtube.com/embed/{$matches[2]}" frameborder="0" allowfullscreen></iframe>
+<figcaption>{$caption}{$matches[4]}</figcaption>
+</figure>
+EOD;
+      break;
+      
+      case 'syntax=': return CTextFilter::SyntaxHighlightGeSHi($matches[3], $matches[2]); break;
+      case '```': return CTextFilter::SyntaxHighlightGeSHi($matches[3], $matches[2]); break;
+      //case 'syntax=': return "<pre>" . highlight_string($matches[3], true) . "</pre>"; break;
+      //case 'INCL':  include($matches[2]); break;
+      case 'INFO':  return "<div class='info' markdown=1>"; break;
+      case '/INFO': return "</div>"; break;
+      case 'BASEURL': return CLydia::Instance()->request->base_url; break;
+      case 'FIGURE': return CTextFilter::ShortCodeFigure($matches[2]); break;
+      case 'FIGURE-SVG': return CTextFilter::ShortCodeSVGFigure($matches[2]); break;
+      case 'ASCIINEMA': return CTextFilter::ShortCodeAsciinema($matches[2]); break;
+      default: return "{$matches[1]} IS UNKNOWN SHORTTAG."; break;
+    }
+  };
+  $patterns = array(
+    '#\[(BASEURL)\]#',
+    //'/\[(AUTHOR) name=(.+) email=(.+) url=(.+)\]/',
+    '/\[(FIGURE)[\s+](.+)\]/',
+    '/\[(FIGURE-SVG)[\s+](.+)\]/',
+    '/\[(ASCIINEMA)[\s+](.+)\]/',
+    '/\[(IMG) src=(.+) alt=(.+)\]/',
+    '/\[(IMG2) src=(.+) alt="(.+)" class="(.+)"\]/',
+    '/\[(BOOK) isbn=(.+)\]/',
+    '/\[(YOUTUBE) src=(.+) width=(.+) caption=(.+)\]/',
+    '/~~~(syntax=)(php|html|html5|css|sql|javascript|bash)\n([^~]+)\n~~~/s',
+    '/(```)(php|html|html5|css|sql|javascript|bash|text|txt|python)\n([^`]+)\n```/s',
+    //'/\[(INCL)/s*([^\]+)/',
+    '#\[(INFO)\]#', '#\[(/INFO)\]#',
+  );
+
+  $ret = preg_replace_callback($patterns, $callback, $text);
+  return $ret;
+}
+*/
+
+
+
+    /**
+     * Support SmartyPants for better typography. 
+     *
+     * @param string text text to be converted.
+     * @return string the formatted text.
+     */
+/*     public static function SmartyPants($text) {   
+      require_once(__DIR__.'/php_smartypants_1.5.1e/smartypants.php');
+      return SmartyPants($text);
+    }
+*/
+
+
+    /**
+     * Support enhanced SmartyPants/Typographer for better typography. 
+     *
+     * @param string text text to be converted.
+     * @return string the formatted text.
+     */
+/*     public static function Typographer($text) {   
+      require_once(__DIR__.'/php_smartypants_typographer_1.0/smartypants.php');
+      $ret = SmartyPants($text);
+      return $ret;
+    }
+*/
+
+
 }
