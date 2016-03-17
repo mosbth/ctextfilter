@@ -8,6 +8,10 @@ namespace Mos\TextFilter;
  */
 class CTextFilter
 {
+    use TTextUtilities;
+
+
+
     /**
      * Supported filters.
      */
@@ -214,6 +218,11 @@ class CTextFilter
         foreach ($filter as $key) {
             $this->parseFactory($key);
         }
+
+        $this->current->text = $this->getUntilStop($this->current->text);
+        list($excerpt, $hasMore) = $this->getUntilMore($this->current->text);
+        $this->current->excerpt = $excerpt;
+        $this->current->hasMore = $hasMore;
 
         return $this->current;
     }

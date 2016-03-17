@@ -1,6 +1,6 @@
 <?php
 
-namespace Anax\Content;
+namespace Mos\TextFilter;
 
 /**
  * Utilities when working with text.
@@ -30,7 +30,7 @@ trait TTextUtilities
      *
      * @param string $text with content
      *
-     * @return string with text
+     * @return array with text and boolean if more was detected.
      */
     public function getUntilMore($text)
     {
@@ -39,6 +39,6 @@ trait TTextUtilities
         if ($pos) {
             $text = substr($text, 0, $pos);
         }
-        return $text;
+        return [$text, $hasMore];
     }
 }

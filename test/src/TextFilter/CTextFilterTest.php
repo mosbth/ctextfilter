@@ -30,6 +30,55 @@ class CTextFilterTest extends \PHPUnit_Framework_TestCase
       *
       * @return void
       */
+    public function testMore()
+    {
+        $filter = new CTextFilter();
+
+        $text = "";
+        $exp  = "";
+        $res = $filter->parse($text, []);
+        $this->assertEquals($exp, $res->excerpt, "More did not match");
+
+        $text = "A<!--more-->B";
+        $exp  = "A";
+        $res = $filter->parse($text, []);
+        $this->assertEquals($exp, $res->excerpt, "More did not match");
+
+        $text = "A<!--stop-->B<!--more-->C";
+        $exp  = "A";
+        $res = $filter->parse($text, []);
+        $this->assertEquals($exp, $res->excerpt, "More did not match");
+    }
+
+
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
+    public function testStop()
+    {
+        $filter = new CTextFilter();
+
+        $text = "";
+        $exp  = "";
+        $res = $filter->parse($text, []);
+        $this->assertEquals($exp, $res->excerpt, "Stop did not match");
+
+        $text = "A<!--stop-->B";
+        $exp  = "A";
+        $res = $filter->parse($text, []);
+        $this->assertEquals($exp, $res->excerpt, "Stop did not match");
+    }
+
+
+
+     /**
+      * Test.
+      *
+      * @return void
+      */
     public function testSyntaxHighlightGeshiMethod()
     {
         $filter = new CTextFilter();
