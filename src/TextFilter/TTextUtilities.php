@@ -110,7 +110,6 @@ trait TTextUtilities
         foreach ($matches as $val) {
             preg_match("/id=['\"]([^>\"']+)/", $val[2], $id);
             $id = isset($id[1]) ? $id[1] : null;
-            var_dump($matches[1]);
             $toc[] = [
                 "level" => isset($val[1])
                     ? $val[1]
