@@ -1,9 +1,10 @@
 History
 ===================================
 
-v1.2.4* (2016-03-17)
+v1.2.4* (2016-03-18)
 -----------------------------------
 
+* Adding wrapElementWithStartEnd and wrapElementContentWithStartEnd.
 * Prepared with features from Lydia.
 
 

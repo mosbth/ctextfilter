@@ -46,8 +46,55 @@ trait TTextUtilities
 
 
     /**
+     * Wrap HTML element with with start and end.
+     *
+     * @param string  $text  with content
+     * @param string  $tag   HTML tag to search for
+     * @param string  $start wrap start part
+     * @param string  $end   wrap end part
+     * @param number  $count hits to search for
+     *
+     * @return array with text and boolean if more was detected.
+     */
+    public function wrapElementWithStartEnd($text, $tag, $start, $end, $count)
+    {
+        return preg_replace(
+            "#(<$tag>)(.*?)(</$tag>)#",
+            "$start$1$2$3$end</a>",
+            $text,
+            $count
+        );
+    }
+
+
+
+    /**
+    * Wrap content of a HTML element with start and end.
+     *
+     * @param string  $text  with content
+     * @param string  $tag   HTML tag to search for
+     * @param string  $start wrap start part
+     * @param string  $end   wrap end part
+     * @param number  $count hits to search for
+     *
+     * @return array with text and boolean if more was detected.
+     */
+    public function wrapElementContentWithStartEnd($text, $tag, $start, $end, $count)
+    {
+        return preg_replace(
+            "#(<$tag>)(.*?)(</$tag>)#",
+            "$1$start$2$end$3</a>",
+            $text,
+            $count
+        );
+    }
+
+
+
+
+    /**
      * Returns the excerpt of the text with at most the specified amount of characters.
-     * 
+     *
      * @param int $chars the number of characters to return.
      * @param boolean $hard do a hard break at exactly $chars characters or find closest space.
      * @return string as the excerpt.

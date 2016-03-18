@@ -770,7 +770,8 @@ EOD;
         $height = ceil($matches[3] / (16/9));
         return <<<EOD
 <figure>
-<iframe width='{$matches[3]}' height='{$height}' src="http://www.youtube.com/embed/{$matches[2]}" frameborder="0" allowfullscreen></iframe>
+<iframe width='{$matches[3]}' height='{$height}' src="http://www.youtube.com/embed/{$matches[2]}" frameborder="0"
+allowfullscreen></iframe>
 <figcaption>{$caption}{$matches[4]}</figcaption>
 </figure>
 EOD;
@@ -813,7 +814,7 @@ EOD;
 
 
     /**
-     * Support SmartyPants for better typography. 
+     * Support SmartyPants for better typography.
      *
      * @param string text text to be converted.
      * @return string the formatted text.
@@ -826,7 +827,7 @@ EOD;
 
 
     /**
-     * Support enhanced SmartyPants/Typographer for better typography. 
+     * Support enhanced SmartyPants/Typographer for better typography.
      *
      * @param string text text to be converted.
      * @return string the formatted text.
@@ -837,6 +838,4 @@ EOD;
       return $ret;
     }
 */
-
-
 }
