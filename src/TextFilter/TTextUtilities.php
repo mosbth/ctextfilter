@@ -91,6 +91,53 @@ trait TTextUtilities
 
 
 
+    /**
+     * Create a TOC of HTML headings from and to a certain level.
+     *
+     * @param string  $text  with content
+     * @param integer $start level of headings to use for toc.
+     * @param integer $stop  level of headings to use for toc.
+     *
+     * @return array with entries to generate a TOC.
+     */
+    public function createToc($text, $start = 2, $stop = 4)
+    {
+        $level = "$start-$stop";
+        $pattern = "/<(h[$level])([^>]*)>(.*)<\/h[$level]>/";
+        preg_match_all($pattern, $text, $matches, PREG_SET_ORDER);
+
+        $toc = [];
+        foreach ($matches as $val) {
+            preg_match("/id=['\"]([^>\"']+)/", $val[2], $id);
+            $id = isset($id[1]) ? $id[1] : null;
+            var_dump($matches[1]);
+            $toc[] = [
+                "level" => isset($val[1])
+                    ? $val[1]
+                    : null,
+                "title" => isset($val[3])
+                    ? $val[3]
+                    : null,
+                "id" => $id,
+            ];
+        }
+
+        return $toc;
+    }
+
+
+
+    /**
+     * Get content as pure text.
+     *
+     * @return string with the pure text.
+     */
+/*    public function GetPureText() {
+      return preg_replace('/\s+/', ' ', strip_tags($this->GetFilteredData()));
+    }
+*/
+
+
 
     /**
      * Returns the excerpt of the text with at most the specified amount of characters.

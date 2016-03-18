@@ -4,6 +4,7 @@ History
 v1.2.4* (2016-03-18)
 -----------------------------------
 
+* Added toc for article based on HTML headers.
 * Adding wrapElementWithStartEnd and wrapElementContentWithStartEnd.
 * Prepared with features from Lydia.
 
