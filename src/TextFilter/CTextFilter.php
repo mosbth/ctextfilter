@@ -26,6 +26,7 @@ class CTextFilter
         "nl2br",
         "purify",
         "titlefromh1",
+        "anchor4Header",
      ];
 
 
@@ -154,6 +155,7 @@ class CTextFilter
             "geshi"     => "syntaxHighlightGeSHi",
             "nl2br"     => "nl2br",
             "purify"    => "purify",
+            'anchor4Header' => 'createAnchor4Header',
         ];
 
         // Do the specific filter
@@ -186,6 +188,7 @@ class CTextFilter
             case "geshi":
             case "nl2br":
             case "purify":
+            case "anchor4Header":
                 $this->current->text = call_user_func_array(
                     [$this, $callbacks[$filter]],
                     [$text]

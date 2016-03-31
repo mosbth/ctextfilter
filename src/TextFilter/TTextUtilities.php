@@ -127,6 +127,54 @@ trait TTextUtilities
 
 
     /**
+     * Create a anchor for each header having an id.
+     *
+     * @param string  $text  with content
+     * @param integer $start level of headings to use.
+     * @param integer $stop  level of headings to use.
+     *
+     * @return string with modified text.
+     */
+    public function createAnchor4Header($text, $start = 1, $stop = 4)
+    {
+        $level = "$start-$stop";
+        $pattern = "#(<h[$level] id=\"([\w-_]+)\">)(.+)(</h[$level]>)#";
+
+        return preg_replace(
+            $pattern,
+            "$1<a class=\"header-anchor\" href=\"#$2\">#</a>$3$4",
+            $text
+        );
+    }
+
+
+
+    /**
+     * Add baseurl to all relative links.
+     *
+     * @param string   $text     with content.
+     * @param string   $baseurl  as string to prepend relative link.
+     * @param callable $callback Use to create url from route.
+     *
+     * @return string with modified text.
+     */
+    public function addBaseurlToRelativeLinks($text, $baseurl, $callback)
+    {
+        $pattern = "#<a(.+)href=\"([^\"]+)\"(.*)>#";
+
+        return preg_replace_callback(
+            $pattern,
+            function ($matches) use ($baseurl, $callback) {
+                $url = $callback($matches[2], $baseurl);
+                return "<a${matches[1]}href=\"$url\"${matches[3]}>";
+            },
+            $text
+        );
+    }
+
+
+
+    /**
      * Get content as pure text.
      *
      * @return string with the pure text.
