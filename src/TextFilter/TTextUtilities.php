@@ -160,7 +160,7 @@ trait TTextUtilities
      */
     public function addBaseurlToRelativeLinks($text, $baseurl, $callback)
     {
-        $pattern = "#<a(.+)href=\"([^\"]+)\"(.*)>#";
+        $pattern = "#<a(.+?)href=\"([^\"]*)\"([.^>]*)>#";
 
         return preg_replace_callback(
             $pattern,

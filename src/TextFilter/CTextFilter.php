@@ -223,11 +223,24 @@ class CTextFilter
         }
 
         $this->current->text = $this->getUntilStop($this->current->text);
-        list($excerpt, $hasMore) = $this->getUntilMore($this->current->text);
-        $this->current->excerpt = $excerpt;
-        $this->current->hasMore = $hasMore;
 
         return $this->current;
+    }
+
+
+
+    /**
+     * Add excerpt as short version of text if available.
+     *
+     * @param object &$current same structure as returned by parse().
+     *
+     * @return void.
+     */
+    public function addExcerpt($current)
+    {
+        list($excerpt, $hasMore) = $this->getUntilMore($current->text);
+        $current->excerpt = $excerpt;
+        $current->hasMore = $hasMore;
     }
 
 
@@ -422,7 +435,11 @@ class CTextFilter
         //$geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
         //echo "<pre>", $geshi->get_stylesheet(false) , "</pre>"; exit;
 
-        return $geshi->parse_code();
+        $code = $geshi->parse_code();
+
+        // Replace last &nbsp;</pre>, -strlen("&nbsp;</pre>") == 12
+        $code = substr_replace($code, "</pre>", -12);
+        return $code;
     }
 
 
