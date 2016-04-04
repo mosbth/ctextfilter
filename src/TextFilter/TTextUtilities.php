@@ -103,19 +103,19 @@ trait TTextUtilities
     public function createToc($text, $start = 2, $stop = 4)
     {
         $level = "$start-$stop";
-        $pattern = "/<(h[$level])([^>]*)>(.*)<\/h[$level]>/";
+        $pattern = "#<(h[$level])([^>]*)>(.*)</h[$level]>#";
         preg_match_all($pattern, $text, $matches, PREG_SET_ORDER);
 
         $toc = [];
         foreach ($matches as $val) {
-            preg_match("/id=['\"]([^>\"']+)/", $val[2], $id);
+            preg_match("#id=['\"]([^>\"']+)#", $val[2], $id);
             $id = isset($id[1]) ? $id[1] : null;
             $toc[] = [
                 "level" => isset($val[1])
                     ? $val[1]
                     : null,
                 "title" => isset($val[3])
-                    ? $val[3]
+                    ? ltrim(strip_tags($val[3]), "#")
                     : null,
                 "id" => $id,
             ];
