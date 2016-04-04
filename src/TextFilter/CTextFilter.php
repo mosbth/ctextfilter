@@ -517,6 +517,7 @@ class CTextFilter
         $patterns = [
             "/\[(FIGURE)[\s+](.+)\]/",
             "/(```)([\w]*)\n([^`]*)```[\n]{1}/s",
+            "/\[(ASCIINEMA)[\s+](.+)\]/",
         ];
 
         return preg_replace_callback(
@@ -526,6 +527,10 @@ class CTextFilter
 
                     case "FIGURE":
                         return self::ShortCodeFigure($matches[2]);
+                    break;
+
+                    case "ASCIINEMA":
+                        return self::ShortCodeAsciinema($matches[2]);
                     break;
 
                     case "```":
@@ -636,36 +641,33 @@ EOD;
      * @param string $options for the shortcode.
      * @return array with all the options.
      */
-/*    public static function ShortCodeAsciinema($options) {
-      extract(array_merge(array(
-        'id' => null,
-        'class' => null,
-        'src' => null,
-        'title' => null,
-        'alt' => null,
-        'caption' => null,
-      ), CTextFilter::ShortCodeInit($options)), EXTR_SKIP);
+    public static function ShortCodeAsciinema($options) {
+        // Merge incoming options with default and expose as variables
+        $options= array_merge(
+            [
+                'id' => null,
+                'class' => null,
+                'src' => null,
+                'title' => null,
+                'caption' => null,
+            ],
+            self::ShortCodeInit($options)
+        );
+        extract($options, EXTR_SKIP);
 
-      $id = $id ? " id='$id'" : null;
-      $class = $class ? " class='figure $class'" : " class='figure'";
-      $title = $title ? " title='$title'" : null;
-      
-      if(!$alt && $caption) {
-        $alt = $caption;
-      }
+        $id = $id ? " id=\"$id\"" : null;
+        $class = $class ? " class=\"figure asciinema $class\"" : " class=\"figure asciinema\"";
+        $title = $title ? " title=\"$title\"" : null;
 
-      if(!$href) {
-        $pos = strpos($src, '?');
-        $href = $pos ? substr($src, 0, $pos) : $src;
-      }
+        $html = <<<EOD
+<figure{$id}{$class}$title>
+<script type="text/javascript" src="https://asciinema.org/a/{$src}.js" id="asciicast-{$src}" async></script>
+<figcaption markdown=1>{$caption}</figcaption>
+</figure>
+EOD;
 
-      $html = <<<EOD
-  <script type="text/javascript" src="https://asciinema.org/a/{$src}.js" id="asciicast-{$src}" async></script>
-  EOD;
-
-      return $html;
+        return $html;
     }
-*/
 
 
 
