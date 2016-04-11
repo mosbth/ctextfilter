@@ -175,6 +175,33 @@ trait TTextUtilities
 
 
     /**
+     * Generate revision history and add to the end of content.
+     *
+     * @param string $text     with content.
+     * @param array  $revision with all revisions.
+     * @param string $start    start wrap with this.
+     * @param string $end      end wrap with this.
+     * @param string $class    to add to ul element.
+     *
+     * @return string with text and optionally added revision history.
+     */
+    public function addRevisionHistory($text, $revision, $start, $end, $class)
+    {
+        
+        $text  = $text . $start;
+        $text .= "<ul class=\"$class\">\n";
+        
+        foreach ($revision as $date => $info) {
+            $text .= "<li>$date: $info</li>\n";
+        }
+
+        $text .= "</ul>\n" . $end;
+        return $text;
+    }
+
+
+
+    /**
      * Get content as pure text.
      *
      * @return string with the pure text.

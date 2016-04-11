@@ -39,6 +39,13 @@ class CTextFilter
 
 
     /**
+     * Hold meta information for filters to use.
+     */
+    private $meta = [];
+
+
+
+    /**
      * Call each filter.
      *
      * @deprecated deprecated since version 1.2 in favour of parse().
@@ -79,6 +86,20 @@ class CTextFilter
         }
 
         return $text;
+    }
+
+
+
+    /**
+     * Set meta information that some filters can use.
+     *
+     * @param array $meta values for filters to use.
+     *
+     * @return void
+     */
+    public function setMeta($meta)
+    {
+        return $this->meta = $meta;
     }
 
 
@@ -320,11 +341,10 @@ class CTextFilter
      */
     public function yamlFrontMatter($text)
     {
-        $needle = "---\n";
-        list($text, $frontmatter) = $this->extractFrontMatter($text, $needle, $needle);
+        list($text, $frontmatter) = $this->extractFrontMatter($text, "---\n", "...\n");
 
         if (function_exists("yaml_parse") && !empty($frontmatter)) {
-            $frontmatter = yaml_parse($needle . $frontmatter);
+            $frontmatter = yaml_parse("---\n$frontmatter...\n");
 
             if ($frontmatter === false) {
                 throw new Exception("Failed parsing YAML frontmatter.");
