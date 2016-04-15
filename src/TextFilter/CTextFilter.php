@@ -237,7 +237,7 @@ class CTextFilter
     public function parse($text, $filter)
     {
         $this->current = new \stdClass();
-        $this->current->frontmatter = null;
+        $this->current->frontmatter = [];
         $this->current->text = $text;
 
         foreach ($filter as $key) {
