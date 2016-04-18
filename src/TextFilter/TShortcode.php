@@ -159,42 +159,42 @@ EOD;
         // Merge incoming options with default and expose as variables
         $options= array_merge(
             [
-                'id' => null,
-                'class' => null,
-                'src' => null,
-                'title' => null,
-                'alt' => null,
-                'caption' => null,
-                'href' => null,
-                'nolink' => false,
+                "id"    => null,
+                "class" => null,
+                "src"   => null,
+                "title" => null,
+                "alt"   => null,
+                "caption" => null,
+                "href"  => null,
+                "nolink" => false,
             ],
             self::ShortCodeInit($options)
         );
         extract($options, EXTR_SKIP);
 
-        $id = $id ? " id='$id'" : null;
-        $class = $class ? " class='figure $class'" : " class='figure'";
-        $title = $title ? " title='$title'" : null;
+        $id = $id ? " id=\"$id\"" : null;
+        $class = $class ? " class=\"figure $class\"" : " class=\"figure\"";
+        $title = $title ? " title=\"$title\"" : null;
 
         if (!$alt && $caption) {
             $alt = $caption;
         }
 
         if (!$href) {
-            $pos = strpos($src, '?');
+            $pos = strpos($src, "?");
             $href = $pos ? substr($src, 0, $pos) : $src;
         }
 
         $start = null;
         $end = null;
         if (!$nolink) {
-            $start = "<a href='{$href}'>";
+            $start = "<a href=\"{$href}\">";
             $end = "</a>";
         }
 
         $html = <<<EOD
 <figure{$id}{$class}>
-{$start}<img src='{$src}' alt='{$alt}'{$title}/>{$end}
+{$start}<img src="{$src}" alt="{$alt}"{$title}/>{$end}
 <figcaption markdown=1>{$caption}</figcaption>
 </figure>
 EOD;
@@ -211,15 +211,16 @@ EOD;
      * @param string $options for the shortcode.
      * @return array with all the options.
      */
-    public static function ShortCodeAsciinema($options) {
+    public static function ShortCodeAsciinema($options) 
+    {
         // Merge incoming options with default and expose as variables
         $options= array_merge(
             [
-                'id' => null,
-                'class' => null,
-                'src' => null,
-                'title' => null,
-                'caption' => null,
+                "id" => null,
+                "class" => null,
+                "src" => null,
+                "title" => null,
+                "caption" => null,
             ],
             self::ShortCodeInit($options)
         );
@@ -241,68 +242,81 @@ EOD;
 
 
 
-/**
- * Shortcode for including a SVG-image inside a <figure>.
- *
- * @param string $code the code to process.
- * @param string $options for the shortcode.
- * @return array with all the options.
- */
-/*public static function ShortCodeSVGFigure($options) {
-  extract(array_merge(array(
-    'id' => null,
-    'class' => null,
-    'src' => null,
-    'path' => null,
-    'title' => null,
-    'alt' => null,
-    'caption' => null,
-    'href' => null,
-    'nolink' => false,
-  ), CTextFilter::ShortCodeInit($options)), EXTR_SKIP);
+    /**
+     * Shortcode for including a SVG-image inside a <figure>.
+     *
+     * @param string $code the code to process.
+     * @param string $options for the shortcode.
+     * @return array with all the options.
+     */
+/*    public static function ShortCodeSVGFigure($options) {
+        // Merge incoming options with default and expose as variables
+        $options= array_merge(
+            [
+                "id"    => null,
+                "class" => null,
+                "src"   => null,
+                "title" => null,
+                "alt"   => null,
+                "caption" => null,
+                "href"  => null,
+                "nolink" => false,
+                //'path' => null,
+            ],
+            self::ShortCodeInit($options)
+        );
+        extract($options, EXTR_SKIP);
 
-  $id = $id ? " id='$id'" : null;
-  //$class = $class ? " class='$class'" : null;
-  $class = $class ? " class='figure $class'" : " class='figure'";
-  $title = $title ? " title='$title'" : null;
-  
-  if(!$alt && $caption) {
-    $alt = $caption;
-  }
+        $id = $id ? " id=\"$id\"" : null;
+        $class = $class ? " class=\"figure $class\"" : " class=\"figure\"";
+        $title = $title ? " title=\"$title\"" : null;
 
-  if(!$href) {
-    $pos = strpos($src, '?');
-    $href = $pos ? substr($src, 0, $pos) : $src;
-  }
+        if (!$alt && $caption) {
+            $alt = $caption;
+        }
 
-  if(!$nolink) {
-    $a_start = "<a href='{$href}'>";
-    $a_end = "</a>";
-  }
+        if (!$href) {
+            $pos = strpos($src, "?");
+            $href = $pos ? substr($src, 0, $pos) : $src;
+        }
 
-  // Import the file containing the svg-image
-  $svg = null;
-  
-  if($path[0] != '/') {
-    $path = self::$dir . '/' . $path;
-  }
+        $start = null;
+        $end = null;
+        if (!$nolink) {
+            $start = "<a href=\"{$href}\">";
+            $end = "</a>";
+        }
 
-  if(is_file($path)) {
-    $svg = file_get_contents($path);
-  }
-  else {
-    $svg = "No such file: $path";
-  }
-  $html = <<<EOD
+        // Import the file containing the svg-image
+        /*
+        $svg = null;
+
+        if($path[0] != '/') {
+        $path = self::$dir . '/' . $path;
+        }
+
+        if(is_file($path)) {
+        $svg = file_get_contents($path);
+        }
+        else {
+        $svg = "No such file: $path";
+        }
+        $html = <<<EOD
+        <figure{$id}{$class}>
+        {$svg}
+        <figcaption markdown=1>{$caption}</figcaption>
+        </figure>
+        EOD;*/
+/*
+        $html = <<<EOD
 <figure{$id}{$class}>
-{$svg}
+{$start}<img src="{$src}" alt="{$alt}"{$title}/>{$end}
 <figcaption markdown=1>{$caption}</figcaption>
 </figure>
 EOD;
 
-  return $html;
-}
-
+        return $html;*/
+/*    }
 */
 
 
