@@ -449,6 +449,7 @@ class CTextFilter
     {
         $language = $language ?: "text";
         $language = ($language === 'html') ? 'html4strict' : $language;
+
         $geshi = new \GeSHi($text, $language);
         $geshi->set_overall_class('geshi');
         $geshi->enable_classes('geshi');
