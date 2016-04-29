@@ -27,6 +27,7 @@ class CTextFilter
         "nl2br",
         "purify",
         "titlefromh1",
+        "titlefromheader",
         "anchor4Header",
      ];
 
@@ -203,6 +204,14 @@ class CTextFilter
                 }
                 break;
 
+            case "titlefromheader":
+                $title = $this->getTitleFromFirstHeader($text);
+                $this->current->text = $text;
+                if (!isset($this->current->frontmatter["title"])) {
+                    $this->addToFrontmatter(["title" => $title]);
+                }
+                break;
+
             case "bbcode":
             case "clickable":
             case "shortcode":
@@ -373,6 +382,27 @@ class CTextFilter
         $title = null;
 
         if (preg_match("#<h1.*?>(.*)</h1>#", $text, $matches)) {
+            $title = strip_tags($matches[1]);
+        }
+
+        return $title;
+    }
+
+
+
+    /**
+     * Get the title from the first header.
+     *
+     * @param string $text the text to be parsed.
+     *
+     * @return string|null with the title, if its found.
+     */
+    public function getTitleFromFirstHeader($text)
+    {
+        $matches = [];
+        $title = null;
+
+        if (preg_match("#<h[1-6].*?>(.*)</h[1-6]>#", $text, $matches)) {
             $title = strip_tags($matches[1]);
         }
 
