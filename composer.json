@@ -13,19 +13,24 @@
             "role": "Developer"
         }
     ],
+    "autoload": {
+        "psr-4": { 
+            "Mos\\TextFilter\\": "src/TextFilter"
+        }
+    },
     "require": {
         "php": ">=5.4",
         "michelf/php-markdown": "1.5.*",
         "ezyang/htmlpurifier": "4.*",
-        "geshi/geshi": "dev-master as 1.0.x-dev",
-        "ext-json": "*"
+        "geshi/geshi": "dev-master as 1.0.x-dev"
     },
     "suggest": {
+        "ext-json": "*",
         "ext-yaml": "*"
     },
-    "autoload": {
-        "psr-4": { 
-            "Mos\\TextFilter\\": "src/TextFilter"
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.2.x-dev"
         }
     }
 }
