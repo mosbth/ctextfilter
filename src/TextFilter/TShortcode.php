@@ -44,9 +44,8 @@ trait TShortcode
             $patterns,
             function ($matches) {
                 switch ($matches[1]) {
-
                     case "FIGURE":
-                        return self::ShortCodeFigure($matches[2]);
+                        return self::shortCodeFigure($matches[2]);
                     break;
 
                     case "YOUTUBE":
@@ -54,7 +53,7 @@ trait TShortcode
                     break;
 
                     case "ASCIINEMA":
-                        return self::ShortCodeAsciinema($matches[2]);
+                        return self::shortCodeAsciinema($matches[2]);
                     break;
 
                     case "```":
@@ -133,12 +132,14 @@ trait TShortcode
         $caption = t("Figure: !CAPTION", ["!CAPTION" => $caption]);
         $height = ceil($width / $ratio);
 
+        // @codingStandardsIgnoreStart
         $html = <<<EOD
 <figure>
 <iframe width="$width" height="$height" src="http://www.youtube.com/embed/$src" frameborder="0" allowfullscreen></iframe>
 <figcaption markdown=1>{$caption}</figcaption>
 </figure>
 EOD;
+        // @codingStandardsIgnoreEnd
 
         return $html;
     }
@@ -211,7 +212,7 @@ EOD;
      * @param string $options for the shortcode.
      * @return array with all the options.
      */
-    public static function ShortCodeAsciinema($options) 
+    public static function shortCodeAsciinema($options)
     {
         // Merge incoming options with default and expose as variables
         $options= array_merge(

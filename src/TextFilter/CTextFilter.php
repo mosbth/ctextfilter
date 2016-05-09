@@ -80,7 +80,6 @@ class CTextFilter
 
         // For each filter, call its function with the $text as parameter.
         foreach ($filter as $key) {
-
             if (!isset($callbacks[$key])) {
                 throw new Exception("The filter '$filters' is not a valid filter string due to '$key'.");
             }
@@ -490,7 +489,11 @@ class CTextFilter
         $code = $geshi->parse_code();
 
         // Replace last &nbsp;</pre>, -strlen("&nbsp;</pre>") == 12
-        $code = substr_replace($code, "</pre>", -12);
+        $length = strlen("&nbsp;</pre>");
+        if (substr($code, -$length) == "&nbsp;</pre>") {
+            $code = substr_replace($code, "</pre>", -$length);
+        }
+
         return $code;
     }
 

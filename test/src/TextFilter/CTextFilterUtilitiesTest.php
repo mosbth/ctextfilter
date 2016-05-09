@@ -44,7 +44,7 @@ class CTextFilterUtilitiesTest extends \PHPUnit_Framework_TestCase
     {
         $filter = new CTextFilter();
 
-        $callback = function($url, $baseurl) {
+        $callback = function ($url, $baseurl) {
             return rtrim("$baseurl/$url", "/");
         };
 

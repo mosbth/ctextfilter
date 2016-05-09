@@ -37,16 +37,19 @@ class CTextFilterTest extends \PHPUnit_Framework_TestCase
         $text = "";
         $exp  = "";
         $res = $filter->parse($text, []);
+        $filter->addExcerpt($res);
         $this->assertEquals($exp, $res->excerpt, "More did not match");
 
         $text = "A<!--more-->B";
         $exp  = "A";
         $res = $filter->parse($text, []);
+        $filter->addExcerpt($res);
         $this->assertEquals($exp, $res->excerpt, "More did not match");
 
         $text = "A<!--stop-->B<!--more-->C";
         $exp  = "A";
         $res = $filter->parse($text, []);
+        $filter->addExcerpt($res);
         $this->assertEquals($exp, $res->excerpt, "More did not match");
     }
 
@@ -64,11 +67,13 @@ class CTextFilterTest extends \PHPUnit_Framework_TestCase
         $text = "";
         $exp  = "";
         $res = $filter->parse($text, []);
+        $filter->addExcerpt($res);
         $this->assertEquals($exp, $res->excerpt, "Stop did not match");
 
         $text = "A<!--stop-->B";
         $exp  = "A";
         $res = $filter->parse($text, []);
+        $filter->addExcerpt($res);
         $this->assertEquals($exp, $res->excerpt, "Stop did not match");
     }
 
@@ -84,7 +89,7 @@ class CTextFilterTest extends \PHPUnit_Framework_TestCase
         $filter = new CTextFilter();
 
         $text = "";
-        $exp  = '<pre class="text geshi">&nbsp;</pre>';
+        $exp  = '<pre class="text geshi"></pre>';
         $res = $filter->parse($text, ["geshi"]);
         $this->assertEquals($exp, $res->text, "Geshi did not match");
 
@@ -125,7 +130,7 @@ EOD;
 
 EOD;
         $exp = <<<'EOD'
-<pre class="text geshi">&nbsp;</pre>
+<pre class="text geshi"></pre>
 EOD;
         $res = $filter->parse($text, ["shortcode"]);
         $this->assertEquals($exp, $res->text, "Geshi did not match");
@@ -136,7 +141,7 @@ EOD;
 
 EOD;
         $exp = <<<'EOD'
-<pre class="text geshi">&nbsp;</pre>
+<pre class="text geshi"></pre>
 EOD;
         $res = $filter->parse($text, ["shortcode"]);
         $this->assertEquals($exp, $res->text, "Geshi did not match");
@@ -149,7 +154,7 @@ $php = "hi";
 EOD;
         $exp = <<<'EOD'
 <pre class="text geshi">$php = &quot;hi&quot;;
-&nbsp;</pre>
+</pre>
 EOD;
         $res = $filter->parse($text, ["shortcode"]);
         $this->assertEquals($exp, $res->text, "Geshi did not match");
@@ -163,18 +168,11 @@ EOD;
         // @codingStandardsIgnoreStart
         $exp = <<<'EOD'
 <pre class="php geshi"><span class="re0">$php</span> <span class="sy0">=</span> <span class="st0">&quot;hi&quot;</span><span class="sy0">;</span>
-&nbsp;</pre>
+</pre>
 EOD;
         // @codingStandardsIgnoreEnd
         $res = $filter->parse($text, ["shortcode"]);
         $this->assertEquals($exp, $res->text, "Geshi did not match");
-
-        $text = <<<'EOD'
-```php
-$php = "hi";
-```
-
-EOD;
     }
 
 
@@ -297,7 +295,7 @@ EOD;
 
         $text = "";
         $res = $filter->parse($text, ["jsonfrontmatter"]);
-        $this->assertNull($res->frontmatter, "Frontmatter should be null");
+        $this->assertEmpty($res->frontmatter, "Frontmatter should be empty");
         $this->assertEmpty($res->text, "Text should be empty");
 
         $text = <<<EOD
@@ -371,12 +369,12 @@ EOD;
 
         $text = "";
         $res = $filter->parse($text, ["yamlfrontmatter"]);
-        $this->assertNull($res->frontmatter, "Frontmatter should be null");
+        $this->assertEmpty($res->frontmatter, "Frontmatter should be empty");
         $this->assertEmpty($res->text, "Text should be empty");
 
         $text = <<<EOD
 ---
----
+...
 
 EOD;
         $res = $filter->parse($text, ["yamlfrontmatter"]);
@@ -387,7 +385,7 @@ EOD;
         $text = <<<EOD
 ---
 key: value
----
+...
 $txt
 EOD;
         $res = $filter->parse($text, ["yamlfrontmatter"]);
@@ -404,7 +402,7 @@ EOD;
 ---
 key1: value1
 key2: This is a long sentence.
----
+...
 My Article
 =================================
 
@@ -664,8 +662,8 @@ EOD;
 EOD;
 
         $exp  = <<<EOD
-<figure class='figure'>
-<a href='$src'><img src='$src' alt='$caption'/></a>
+<figure class="figure">
+<a href="$src"><img src="$src" alt="$caption"/></a>
 <figcaption markdown=1>$caption</figcaption>
 </figure>
 EOD;
