@@ -1,9 +1,10 @@
 History
 ===================================
 
-v1.2.4* (2016-03-18)
+v1.2.5 (2016-05-09)
 -----------------------------------
 
+* Several updates for Anax Flat.
 * Added toc for article based on HTML headers.
 * Adding wrapElementWithStartEnd and wrapElementContentWithStartEnd.
 * Prepared with features from Lydia.
