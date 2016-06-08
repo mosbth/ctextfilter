@@ -25,6 +25,7 @@ class CTextFilter
         "markdown",
         "geshi",
         "nl2br",
+        "htmlentities",
         "purify",
         "titlefromh1",
         "titlefromheader",
@@ -143,7 +144,7 @@ class CTextFilter
      */
     private function addToFrontmatter($matter)
     {
-        if (empty($matter)) {
+        if (empty($matter) || !is_array($matter)) {
             return $this;
         }
 
@@ -176,6 +177,7 @@ class CTextFilter
             "markdown"  => "markdown",
             "geshi"     => "syntaxHighlightGeSHi",
             "nl2br"     => "nl2br",
+            "htmlentities" => "htmlentities",
             "purify"    => "purify",
             'anchor4Header' => 'createAnchor4Header',
         ];
@@ -217,6 +219,7 @@ class CTextFilter
             case "markdown":
             case "geshi":
             case "nl2br":
+            case "htmlentities":
             case "purify":
             case "anchor4Header":
                 $this->current->text = call_user_func_array(
@@ -543,6 +546,20 @@ class CTextFilter
     public function nl2br($text)
     {
         return nl2br($text);
+    }
+
+
+
+    /**
+     * For convenience access to htmlentities
+     *
+     * @param string $text text to be converted.
+     *
+     * @return string the formatted text.
+     */
+    public function htmlentities($text)
+    {
+        return htmlentities($text);
     }
 
 
