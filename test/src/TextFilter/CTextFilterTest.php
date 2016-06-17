@@ -120,6 +120,7 @@ EOD;
      *
      * @return void
      */
+/*
     public function testSyntaxHighlightGeshiShortCode()
     {
         $filter = new CTextFilter();
@@ -168,6 +169,69 @@ EOD;
         // @codingStandardsIgnoreStart
         $exp = <<<'EOD'
 <pre class="php geshi"><span class="re0">$php</span> <span class="sy0">=</span> <span class="st0">&quot;hi&quot;</span><span class="sy0">;</span>
+</pre>
+EOD;
+        // @codingStandardsIgnoreEnd
+        $res = $filter->parse($text, ["shortcode"]);
+        $this->assertEquals($exp, $res->text, "Geshi did not match");
+    }
+*/
+
+
+
+/**
+ * Test.
+ *
+ * @return void
+ */
+    public function testSyntaxHighlightHlJsiShortCode()
+    {
+        $filter = new CTextFilter();
+
+        $text = <<<'EOD'
+```text
+```
+
+EOD;
+        $exp = <<<'EOD'
+<pre></pre>
+EOD;
+        $res = $filter->parse($text, ["shortcode"]);
+        $this->assertEquals($exp, $res->text, "Geshi did not match");
+
+        $text = <<<'EOD'
+```
+```
+
+EOD;
+        $exp = <<<'EOD'
+<pre></pre>
+EOD;
+        $res = $filter->parse($text, ["shortcode"]);
+        $this->assertEquals($exp, $res->text, "Geshi did not match");
+
+        $text = <<<'EOD'
+```text
+$php = "hi";
+```
+
+EOD;
+        $exp = <<<'EOD'
+<pre>$php = "hi";
+</pre>
+EOD;
+        $res = $filter->parse($text, ["shortcode"]);
+        $this->assertEquals($exp, $res->text, "Geshi did not match");
+
+        $text = <<<'EOD'
+```php
+$php = "hi";
+```
+
+EOD;
+        // @codingStandardsIgnoreStart
+        $exp = <<<'EOD'
+<pre class="hljs">$php = <span class="hljs-string">"hi"</span>;
 </pre>
 EOD;
         // @codingStandardsIgnoreEnd
