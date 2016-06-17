@@ -7,7 +7,7 @@ $text = <<<EOD
 {{{
 {
     "title": "Title of my article",
-    "lang": "en"
+    "lang": "en",
     "key1": "value1",
     "key2": "This is a long sentence.",
 
