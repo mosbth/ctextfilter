@@ -1,6 +1,13 @@
 History
 ===================================
 
+v1.2.7 (2016-06-17)
+-----------------------------------
+
+* Add PHP SmartyPantsTypographer.
+* Correcting error in example `webroot/jsonfrontmatter.php`.
+
+
 v1.2.6 (2016-06-08)
 -----------------------------------
 

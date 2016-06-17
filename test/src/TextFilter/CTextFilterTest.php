@@ -531,6 +531,23 @@ EOD;
      *
      * @return void
      */
+    public function testSmartyPants()
+    {
+        $filter = new CTextFilter();
+
+        $html = "...";
+        $exp  = "<p>&#8230;</p>\n";
+        $res = $filter->doFilter($html, "markdown");
+        $this->assertEquals($exp, $res, "SmartyPants elippsis failed: '$res'");
+    }
+
+
+
+    /**
+     * Test.
+     *
+     * @return void
+     */
     public function testMarkdownAndBBCode()
     {
         $filter = new CTextFilter();

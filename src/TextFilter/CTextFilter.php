@@ -531,7 +531,12 @@ class CTextFilter
      */
     public function markdown($text)
     {
-        return \Michelf\MarkdownExtra::defaultTransform($text);
+        $text = \Michelf\MarkdownExtra::defaultTransform($text);
+        $text = \Michelf\SmartyPantsTypographer::defaultTransform(
+            $text,
+            \Michelf\SMARTYPANTS_ATTR_LONG_EM_DASH_SHORT_EN
+        );
+        return $text;
     }
 
 
