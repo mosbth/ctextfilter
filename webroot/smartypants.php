@@ -9,8 +9,8 @@ Typography using SmartyPants
 
 This is an example on typographical elements using SmartyPants.
 
-| What | Source | SmartyPants |
-|------|--------|--------|
+| What          | Source    | SmartyPants |
+|---------------|-----------|---------|
 | Curly quotes  | \"curly\" | "curly" |
 | Curly quotes  | \'curly\' | 'curly' |
 | Em-dash       | \-\--     | ---     |

@@ -1,6 +1,13 @@
 History
 ===================================
 
+v1.2.8 (2016-06-17)
+-----------------------------------
+
+* Added a PHP port of Higlight.js, `scrivo/highlight.php`, to replace Geshi.
+* Added Geshi stylesheet.
+
+
 v1.2.7 (2016-06-17)
 -----------------------------------
 

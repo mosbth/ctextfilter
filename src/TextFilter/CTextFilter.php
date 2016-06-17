@@ -480,16 +480,17 @@ class CTextFilter
     public function syntaxHighlightGeSHi($text, $language = "text")
     {
         $language = $language ?: "text";
-        $language = ($language === 'html') ? 'html4strict' : $language;
+        //$language = ($language === 'html') ? 'html4strict' : $language;
+        $language = ($language === 'html') ? 'html5' : $language;
 
         $geshi = new \GeSHi($text, $language);
         $geshi->set_overall_class('geshi');
         $geshi->enable_classes('geshi');
         //$geshi->set_header_type(GESHI_HEADER_PRE_VALID);
         //$geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
-        //echo "<pre>", $geshi->get_stylesheet(false) , "</pre>"; exit;
-
         $code = $geshi->parse_code();
+
+        //echo "<pre>$language\n$code\n", $geshi->get_stylesheet(false) , "</pre>"; exit;
 
         // Replace last &nbsp;</pre>, -strlen("&nbsp;</pre>") == 12
         $length = strlen("&nbsp;</pre>");
@@ -498,6 +499,29 @@ class CTextFilter
         }
 
         return $code;
+    }
+
+
+
+    /**
+     * Syntax highlighter using highlight.php, a port of highlight.js
+     * https://packagist.org/packages/scrivo/highlight.php.
+     *
+     * @param string $text     text to be converted.
+     * @param string $language which language to use for highlighting syntax.
+     *
+     * @return string the formatted text.
+     */
+    public function syntaxHighlightJs($text, $language = "text")
+    {
+        if ($language === "text" || empty($language)) {
+            return "<pre>$text</pre>";
+        }
+
+        $highlight = new \Highlight\Highlighter();
+        $res = $highlight->highlight($language, $text);
+
+        return "<pre class=\"hljs\">$res->value</pre>";
     }
 
 

@@ -57,7 +57,8 @@ trait TShortcode
                     break;
 
                     case "```":
-                        return $this->syntaxHighlightGeSHi($matches[3], $matches[2]);
+                        //return $this->syntaxHighlightGeSHi($matches[3], $matches[2]);
+                        return $this->syntaxHighlightJs($matches[3], $matches[2]);
                     break;
 
                     case 'INFO':
