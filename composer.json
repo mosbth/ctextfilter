@@ -23,7 +23,6 @@
         "michelf/php-markdown": "1.6.*",
         "michelf/php-smartypants": "1.6.x-dev",
         "ezyang/htmlpurifier": "4.*",
-        "geshi/geshi": "dev-master",
         "scrivo/highlight.php": "^9.0"
     },
     "suggest": {

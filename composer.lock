@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bf76012d11dffc8f56a8247b8aa110f6",
-    "content-hash": "357e1dc28d1369e8205bd085552758e4",
+    "hash": "5ff72865a9c6d8764592e2a1338633c9",
+    "content-hash": "a2a5bb3b6518270ed53f93bc417ab00b",
     "packages": [
         {
             "name": "ezyang/htmlpurifier",
@@ -50,43 +50,6 @@
                 "html"
             ],
             "time": "2015-08-05 01:03:42"
-        },
-        {
-            "name": "geshi/geshi",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/GeSHi/geshi-1.0.git",
-                "reference": "ac5c9c1f26eba2e6d0a9e374dc3d8316b586cdcc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/ac5c9c1f26eba2e6d0a9e374dc3d8316b586cdcc",
-                "reference": "ac5c9c1f26eba2e6d0a9e374dc3d8316b586cdcc",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/geshi/",
-                    "src/geshi.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Benny Baumann",
-                    "email": "BenBE@geshi.org",
-                    "homepage": "http://blog.benny-baumann.de/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Generic Syntax Highlighter",
-            "homepage": "http://qbnz.com/highlighter/",
-            "time": "2016-02-01 23:14:34"
         },
         {
             "name": "michelf/php-markdown",
@@ -233,8 +196,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "michelf/php-smartypants": 20,
-        "geshi/geshi": 20
+        "michelf/php-smartypants": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

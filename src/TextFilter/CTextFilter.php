@@ -23,7 +23,7 @@ class CTextFilter
         "clickable",
         "shortcode",
         "markdown",
-        "geshi",
+//        "geshi",
         "nl2br",
         "htmlentities",
         "purify",
@@ -175,7 +175,7 @@ class CTextFilter
             "clickable" => "makeClickable",
             "shortcode" => "shortCode",
             "markdown"  => "markdown",
-            "geshi"     => "syntaxHighlightGeSHi",
+            //"geshi"     => "syntaxHighlightGeSHi",
             "nl2br"     => "nl2br",
             "htmlentities" => "htmlentities",
             "purify"    => "purify",
@@ -217,7 +217,7 @@ class CTextFilter
             case "clickable":
             case "shortcode":
             case "markdown":
-            case "geshi":
+            //case "geshi":
             case "nl2br":
             case "htmlentities":
             case "purify":
@@ -477,6 +477,7 @@ class CTextFilter
      *
      * @return string the formatted text.
      */
+     /*
     public function syntaxHighlightGeSHi($text, $language = "text")
     {
         $language = $language ?: "text";
@@ -500,6 +501,7 @@ class CTextFilter
 
         return $code;
     }
+*/
 
 
 

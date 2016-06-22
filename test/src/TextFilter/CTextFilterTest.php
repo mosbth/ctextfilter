@@ -16,7 +16,7 @@ class CTextFilterTest extends \PHPUnit_Framework_TestCase
          'bbcode',
          'clickable',
          'markdown',
-         'geshi',
+//         'geshi',
          'nl2br',
          'shortcode',
          'purify',
@@ -84,6 +84,7 @@ class CTextFilterTest extends \PHPUnit_Framework_TestCase
       *
       * @return void
       */
+/*
     public function testSyntaxHighlightGeshiMethod()
     {
         $filter = new CTextFilter();
@@ -112,7 +113,7 @@ EOD;
         $res = $filter->syntaxHighlightGeSHi($text, "php");
         $this->assertEquals($exp, $res, "Geshi did not match");
     }
-
+*/
 
 
     /**
@@ -184,6 +185,7 @@ EOD;
  *
  * @return void
  */
+/*
     public function testSyntaxHighlightHlJsiShortCode()
     {
         $filter = new CTextFilter();
@@ -238,7 +240,7 @@ EOD;
         $res = $filter->parse($text, ["shortcode"]);
         $this->assertEquals($exp, $res->text, "Geshi did not match");
     }
-
+*/
 
 
      /**
