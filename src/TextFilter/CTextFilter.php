@@ -592,32 +592,4 @@ class CTextFilter
     {
         return htmlentities($text);
     }
-
-
-
-    /**
-     * Support SmartyPants for better typography.
-     *
-     * @param string text text to be converted.
-     * @return string the formatted text.
-     */
-/*     public static function SmartyPants($text) {   
-      require_once(__DIR__.'/php_smartypants_1.5.1e/smartypants.php');
-      return SmartyPants($text);
-    }
-*/
-
-
-    /**
-     * Support enhanced SmartyPants/Typographer for better typography.
-     *
-     * @param string text text to be converted.
-     * @return string the formatted text.
-     */
-/*     public static function Typographer($text) {   
-      require_once(__DIR__.'/php_smartypants_typographer_1.0/smartypants.php');
-      $ret = SmartyPants($text);
-      return $ret;
-    }
-*/
 }

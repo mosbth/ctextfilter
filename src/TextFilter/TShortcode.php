@@ -35,6 +35,7 @@ trait TShortcode
             //'/\[(YOUTUBE) src=(.+) width=(.+) caption=(.+)\]/',
             "/\[(YOUTUBE)[\s+](.+)\]/",
             "/\[(ASCIINEMA)[\s+](.+)\]/",
+            "/\[(BOOK)[\s+](.+)\]/",
             "/(```)([\w]*)\n([^`]*)```[\n]{1}/s",
             '/\[(INFO)\]/',
             '/\[(\/INFO)\]/',
@@ -56,17 +57,28 @@ trait TShortcode
                         return self::shortCodeAsciinema($matches[2]);
                     break;
 
+                    case "BOOK":
+                        return self::shortCodeBook($matches[2]);
+                    break;
+
                     case "```":
                         //return $this->syntaxHighlightGeSHi($matches[3], $matches[2]);
                         return $this->syntaxHighlightJs($matches[3], $matches[2]);
                     break;
 
                     case 'INFO':
-                        return "<div class='info' markdown=1>";
+                        return <<<EOD
+<div class="info">
+    <span class="icon fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-info fa-stack-1x fa-inverse" aria-hidden="true"></i>
+    </span>
+    <div markdown=1>
+EOD;
                         break;
 
                     case '/INFO':
-                        return "</div>";
+                        return "</div></div>";
                         break;
 
                     default:
@@ -240,6 +252,43 @@ EOD;
 EOD;
 
         return $html;
+    }
+
+
+
+    /**
+     * Shortcode for [book].
+     *
+     * @param string $code the code to process.
+     * @param string $options for the shortcode.
+     * @return array with all the options.
+     */
+    public static function shortCodeBook($options)
+    {
+        // Merge incoming options with default and expose as variables
+        $options= array_merge(
+            [
+                "isbn" => null,
+            ],
+            self::ShortCodeInit($options)
+        );
+        extract($options, EXTR_SKIP);
+
+        $stores = [
+            "BTH" => "http://bth.summon.serialssolutions.com/?#!/search?ho=t&amp;q={$isbn}",
+            "Libris" => "http://libris.kb.se/hitlist?q={$isbn}",
+            "Google Books" => "http://books.google.com/books?q={$isbn}",
+            "Bokus" => "http://www.bokus.com/bok/{$isbn}",
+            "Adlibris" => "http://www.adlibris.com/se/product.aspx?isbn={$isbn}",
+            "Amazon" => "http://www.amazon.com/s/ref=nb_ss?url=field-keywords={$isbn}",
+            "Barnes&Noble" => "http://search.barnesandnoble.com/booksearch/ISBNInquiry.asp?r=1&IF=N&EAN={$isbn}",
+        ];
+
+        $html = null;
+        foreach ($stores as $key => $val) {
+            $html .= "<a href='$val'>$key</a> &bull; ";
+        }
+        return substr($html, 0, -8);
     }
 
 
