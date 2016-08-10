@@ -39,6 +39,8 @@ trait TShortcode
             "/(```)([\w]*)\n([^`]*)```[\n]{1}/s",
             '/\[(INFO)\]/',
             '/\[(\/INFO)\]/',
+            '/\[(WARNING)\]/',
+            '/\[(\/WARNING)\]/',
         ];
 
         return preg_replace_callback(
@@ -77,7 +79,19 @@ trait TShortcode
 EOD;
                         break;
 
+                    case 'WARNING':
+                        return <<<EOD
+<div class="warning">
+    <span class="icon fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-exclamation-triangle fa-stack-1x fa-inverse" aria-hidden="true"></i>
+    </span>
+    <div markdown=1>
+EOD;
+                        break;
+
                     case '/INFO':
+                    case '/WARNING':
                         return "</div></div>";
                         break;
 
@@ -148,7 +162,7 @@ EOD;
         // @codingStandardsIgnoreStart
         $html = <<<EOD
 <figure>
-<iframe width="$width" height="$height" src="http://www.youtube.com/embed/$src" frameborder="0" allowfullscreen></iframe>
+<iframe width="$width" height="$height" src="https://www.youtube.com/embed/$src" frameborder="0" allowfullscreen></iframe>
 <figcaption markdown=1>{$caption}</figcaption>
 </figure>
 EOD;
