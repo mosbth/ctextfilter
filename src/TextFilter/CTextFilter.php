@@ -517,7 +517,7 @@ class CTextFilter
     public function syntaxHighlightJs($text, $language = "text")
     {
         if ($language === "text" || empty($language)) {
-            return "<pre>" . htmlentities($text) . "</pre>";
+            return "<pre class=\"hljs\">" . htmlentities($text) . "</pre>";
         }
 
         $highlight = new \Highlight\Highlighter();

@@ -2,7 +2,7 @@ History
 ===================================
 
 
-v1.2.12 (2016-08-23)
+v1.2.13 (2016-08-23)
 -----------------------------------
 
 * Fix syntaxHighlightJs with pure text to htmlentities.
