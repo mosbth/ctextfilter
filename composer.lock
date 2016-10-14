@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5ff72865a9c6d8764592e2a1338633c9",
-    "content-hash": "a2a5bb3b6518270ed53f93bc417ab00b",
+    "hash": "6ea8d1537e6f56eca1a8077a11f00baf",
+    "content-hash": "050472046435067e091e7e722e383f9c",
     "packages": [
         {
             "name": "ezyang/htmlpurifier",
-            "version": "v4.7.0",
+            "version": "v4.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "ae1828d955112356f7677c465f94f7deb7d27a40"
+                "reference": "d0c392f77d2f2a3dcf7fcb79e2a1e2b8804e75b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/ae1828d955112356f7677c465f94f7deb7d27a40",
-                "reference": "ae1828d955112356f7677c465f94f7deb7d27a40",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/d0c392f77d2f2a3dcf7fcb79e2a1e2b8804e75b2",
+                "reference": "d0c392f77d2f2a3dcf7fcb79e2a1e2b8804e75b2",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2015-08-05 01:03:42"
+            "time": "2016-07-16 12:58:58"
         },
         {
             "name": "michelf/php-markdown",
@@ -104,16 +104,16 @@
         },
         {
             "name": "michelf/php-smartypants",
-            "version": "dev-lib",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/michelf/php-smartypants.git",
-                "reference": "e4a873d4a4e0f3dd6fbf5b9e017362f174eb28df"
+                "reference": "674badae316a957173c67dd3184e21cb6807d7fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/michelf/php-smartypants/zipball/e4a873d4a4e0f3dd6fbf5b9e017362f174eb28df",
-                "reference": "e4a873d4a4e0f3dd6fbf5b9e017362f174eb28df",
+                "url": "https://api.github.com/repos/michelf/php-smartypants/zipball/674badae316a957173c67dd3184e21cb6807d7fb",
+                "reference": "674badae316a957173c67dd3184e21cb6807d7fb",
                 "shasum": ""
             },
             "require": {
@@ -138,16 +138,16 @@
                 {
                     "name": "Michel Fortin",
                     "email": "michel.fortin@michelf.ca",
-                    "homepage": "http://michelf.ca/",
+                    "homepage": "https://michelf.ca/",
                     "role": "Developer"
                 },
                 {
                     "name": "John Gruber",
-                    "homepage": "http://daringfireball.net/"
+                    "homepage": "https://daringfireball.net/"
                 }
             ],
             "description": "PHP SmartyPants",
-            "homepage": "http://michelf.ca/projects/php-smartypants/",
+            "homepage": "https://michelf.ca/projects/php-smartypants/",
             "keywords": [
                 "dashes",
                 "quotes",
@@ -155,7 +155,7 @@
                 "typographer",
                 "typography"
             ],
-            "time": "2013-08-02 10:48:47"
+            "time": "2016-10-10 18:14:08"
         },
         {
             "name": "scrivo/highlight.php",
@@ -195,9 +195,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "michelf/php-smartypants": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

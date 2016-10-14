@@ -560,7 +560,7 @@ class CTextFilter
         $text = \Michelf\MarkdownExtra::defaultTransform($text);
         $text = \Michelf\SmartyPantsTypographer::defaultTransform(
             $text,
-            \Michelf\SMARTYPANTS_ATTR_LONG_EM_DASH_SHORT_EN
+            "2"
         );
         return $text;
     }
