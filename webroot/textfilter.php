@@ -40,6 +40,22 @@ These are own *shortcodes* such as this image with a caption, wrapped in a `<fig
 [FIGURE src="https://www.gravatar.com/avatar/67aaf77308040cd57f0eba43e9f5404a?s=200" caption="Me with a caption."]
 
 
+
+Create mailto: links
+---------------------------------
+
+```text
+<mailto:user@example.com>
+<user@example.com>
+<a href="mailto:user@example.com">mail</a>
+```
+
+<mailto:user@example.com>
+<user@example.com>
+<a href="mailto:user@example.com">mail</a>
+
+
+
 Source code syntax highlight
 ---------------------------------
 
