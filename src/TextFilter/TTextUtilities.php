@@ -175,6 +175,31 @@ trait TTextUtilities
 
 
     /**
+     * Add baseurl to all relative links in image source.
+     *
+     * @param string   $text     with content.
+     * @param string   $baseurl  as string to prepend relative link.
+     * @param callable $callback Use to create url from route.
+     *
+     * @return string with modified text.
+     */
+    public function addBaseurlToImageSource($text, $baseurl, $callback)
+    {
+        $pattern = "#<img(.+?)src=\"([^\"]*)\"(.*?)>#";
+        
+        return preg_replace_callback(
+            $pattern,
+            function ($matches) use ($baseurl, $callback) {
+                $url = $callback($matches[2], $baseurl);
+                return "<img${matches[1]}src=\"$url\"${matches[3]}>";
+            },
+            $text
+        );
+    }
+
+
+
+    /**
      * Generate revision history and add to the end of content.
      *
      * @param string $text     with content.
