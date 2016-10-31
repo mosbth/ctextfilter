@@ -2,6 +2,12 @@ History
 ===================================
 
 
+v1.2.16 (2016-10-31)
+-----------------------------------
+
+* Add support for YAML using `symfony/yaml` or `mustangostang/spyc` if missing `php5-yaml`.
+
+
 v1.2.15 (2016-10-18)
 -----------------------------------
 

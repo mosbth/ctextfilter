@@ -355,18 +355,54 @@ class CTextFilter
     {
         list($text, $frontmatter) = $this->extractFrontMatter($text, "---\n", "...\n");
 
-        if (function_exists("yaml_parse") && !empty($frontmatter)) {
-            $frontmatter = yaml_parse("---\n$frontmatter...\n");
-
-            if ($frontmatter === false) {
-                throw new Exception("Failed parsing YAML frontmatter.");
-            }
+        if (!empty($frontmatter)) {
+            $frontmatter = $this->yamlParse("---\n$frontmatter...\n");
         }
 
         return [
             "text" => $text,
             "frontmatter" => $frontmatter
         ];
+    }
+
+
+
+    /**
+     * Extract YAML front matter from text, use one of several available
+     * implementations of a YAML parser.
+     *
+     * @param string $text the text to be parsed.
+     *
+     * @throws: Exception when parsing frontmatter fails.
+     *
+     * @return array with the formatted text and the front matter.
+     */
+    public function yamlParse($text)
+    {
+        if (function_exists("yaml_parse")) {
+            // Prefer php5-yaml extension
+            $parsed = yaml_parse($text);
+
+            if ($parsed === false) {
+                throw new Exception("Failed parsing YAML frontmatter.");
+            }
+
+            return $parsed;
+        }
+
+        if (method_exists("Symfony\Component\Yaml\Yaml", "parse")) {
+            // symfony/yaml
+            $parsed = \Symfony\Component\Yaml\Yaml::parse($text);
+            return $parsed;
+        }
+
+        if (function_exists("spyc_load")) {
+            // mustangostang/spyc
+            $parsed = spyc_load($text);
+            return $parsed;
+        }
+
+        throw new Exception("Could not find support for YAML.");
     }
 
 
