@@ -207,10 +207,11 @@ trait TTextUtilities
      * @param string $start    start wrap with this.
      * @param string $end      end wrap with this.
      * @param string $class    to add to ul element.
+     * @param string $source   optional url to document source.
      *
      * @return string with text and optionally added revision history.
      */
-    public function addRevisionHistory($text, $revision, $start, $end, $class)
+    public function addRevisionHistory($text, $revision, $start, $end, $class, $source = null)
     {
         
         $text  = $text . $start;
@@ -220,7 +221,16 @@ trait TTextUtilities
             $text .= "<li>$date: $info</li>\n";
         }
 
-        $text .= "</ul>\n" . $end;
+        $text .= "</ul>\n";
+
+        if ($source) {
+            $text .= "<p><a class=\"$class\" href=\"$source\">"
+            . t("Document source")
+            . "</a>.</p>\n";
+        }
+
+        $text .= $end;
+
         return $text;
     }
 
