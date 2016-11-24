@@ -220,10 +220,14 @@ EOD;
             $end = "</a>";
         }
 
+        if ($caption) {
+            $caption = "<figcaption markdown=1>{$caption}</figcaption>";
+        }
+
         $html = <<<EOD
 <figure{$id}{$class}>
 {$start}<img src="{$src}" alt="{$alt}"{$title}/>{$end}
-<figcaption markdown=1>{$caption}</figcaption>
+{$caption}
 </figure>
 EOD;
 
