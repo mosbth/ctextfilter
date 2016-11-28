@@ -83,7 +83,7 @@ trait TTextUtilities
     {
         return preg_replace(
             "#(<$tag>)(.*?)(</$tag>)#",
-            "$1$start$2$end$3</a>",
+            "$1$start$2$end$3",
             $text,
             $count
         );
