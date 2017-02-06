@@ -2,6 +2,12 @@ History
 ===================================
 
 
+v1.2.20 (2017-02-07)
+-----------------------------------
+
+* Fix regexp on how code sections are detected to deal with JavaScript template strings.
+
+
 v1.2.19 (2016-11-28)
 -----------------------------------
 
