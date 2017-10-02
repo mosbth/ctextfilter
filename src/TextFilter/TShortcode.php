@@ -148,23 +148,35 @@ EOD;
     {
         $options= array_merge(
             [
+                "id"    => null,
+                "class" => null,
                 "src" => null,
-                "width" => null,
+                "list" => null,
+                "time" => null,
+                "width" => 600,
+                "ratio" => 16/9,
                 "caption" => null,
-                "ratio" => 16/9
             ],
             self::ShortCodeInit($options)
         );
         extract($options, EXTR_SKIP);
 
-        $caption = t("Figure: !CAPTION", ["!CAPTION" => $caption]);
+        $id = $id ? " id=\"$id\"" : null;
+        $class = $class ? " class=\"figure $class\"" : " class=\"figure\"";
+        $list = $list ? "?listType=playlist&amp;list=$list" : null;
+        $time = $time ? "#t=$time" : null;
         $height = ceil($width / $ratio);
+
+        //$caption = t("Figure: !CAPTION", ["!CAPTION" => $caption]);
+        if ($caption) {
+            $caption = "<figcaption markdown=1>{$caption}</figcaption>";
+        }
 
         // @codingStandardsIgnoreStart
         $html = <<<EOD
-<figure>
-<iframe width="$width" height="$height" src="https://www.youtube.com/embed/$src" frameborder="0" allowfullscreen></iframe>
-<figcaption markdown=1>{$caption}</figcaption>
+<figure{$id}{$class}>
+<iframe width="$width" height="$height" src="https://www.youtube.com/embed/{$src}{$list}{$time}" frameborder="0" allowfullscreen></iframe>
+{$caption}
 </figure>
 EOD;
         // @codingStandardsIgnoreEnd
