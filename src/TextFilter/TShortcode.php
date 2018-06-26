@@ -34,6 +34,7 @@ trait TShortcode
             "/\[(FIGURE)[\s+](.+)\]/",
             //'/\[(YOUTUBE) src=(.+) width=(.+) caption=(.+)\]/',
             "/\[(YOUTUBE)[\s+](.+)\]/",
+            "/\[(CODEPEN)[\s+](.+)\]/",
             "/\[(ASCIINEMA)[\s+](.+)\]/",
             "/\[(BOOK)[\s+](.+)\]/",
             //"/(```)([\w]*)\n([.]*)```[\n]{1}/s",
@@ -54,6 +55,10 @@ trait TShortcode
 
                     case "YOUTUBE":
                         return self::shortCodeYoutube($matches[2]);
+                    break;
+
+                    case "CODEPEN":
+                        return self::shortCodeCodepen($matches[2]);
                     break;
 
                     case "ASCIINEMA":
@@ -178,6 +183,58 @@ EOD;
 <iframe width="$width" height="$height" src="https://www.youtube.com/embed/{$src}{$list}{$time}" frameborder="0" allowfullscreen></iframe>
 {$caption}
 </figure>
+EOD;
+        // @codingStandardsIgnoreEnd
+
+        return $html;
+    }
+
+
+
+    /**
+     * Shortcode for [CODEPEN].
+     *
+     * Usage example: [CODEPEN src=id-for-the-pen user="mosbth"
+     * tab="js,result" caption="caption"]
+     *
+     * @param string $options for the shortcode.
+     *
+     * @return array with all the options.
+     */
+    public static function shortCodeCodepen($options)
+    {
+        $options= array_merge(
+            [
+                "id"    => null,
+                "class" => null,
+                "src" => null,
+                "user" => null,
+                "title" => null,
+                "tab" => "result",
+                "theme" => 0,
+                "height" => 300,
+                "width" => "100%",
+                "caption" => null,
+            ],
+            self::ShortCodeInit($options)
+        );
+        extract($options, EXTR_SKIP);
+
+        $id = $id ? " id=\"$id\"" : null;
+        $class = $class ? " class=\"figure figure-codepen $class\"" : " class=\"figure figure-codepen\"";
+
+        //$caption = t("Figure: !CAPTION", ["!CAPTION" => $caption]);
+        if ($caption) {
+            $caption = "<figcaption markdown=1>{$caption}</figcaption>";
+        }
+
+        // @codingStandardsIgnoreStart
+        $html = <<<EOD
+<figure{$id}{$class} width="$width">
+<p data-height="$height" data-theme-id="$theme" data-slug-hash="$src" data-default-tab="$tab" data-user="$user" data-embed-version="2" data-pen-title="$title" class="codepen">See the <a href="https://codepen.io/$user/pen/$src/">Pen</a> on <a href="https://codepen.io">CodePen</a>.</p>
+{$caption}
+</figure>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
 EOD;
         // @codingStandardsIgnoreEnd
 
