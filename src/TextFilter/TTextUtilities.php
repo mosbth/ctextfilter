@@ -138,7 +138,7 @@ trait TTextUtilities
     public function createAnchor4Header($text, $start = 1, $stop = 4)
     {
         $level = "$start-$stop";
-        $pattern = "#(<h[$level] id=\"([\w-_]+)\">)(.+)(</h[$level]>)#";
+        $pattern = "#(<h[$level] id=\"([\w\-_]+)\">)(.+)(</h[$level]>)#";
 
         return preg_replace(
             $pattern,
