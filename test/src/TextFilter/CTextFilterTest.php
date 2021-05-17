@@ -2,11 +2,13 @@
 
 namespace Mos\TextFilter;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * A testclass
  *
  */
-class CTextFilterTest extends \PHPUnit_Framework_TestCase
+class CTextFilterTest extends TestCase
 {
     /**
      * Supported filters.
@@ -338,6 +340,7 @@ EOD;
       */
     public function testJsonFrontMatterException()
     {
+        //$this->expectException(Exception::class);
         $filter = new CTextFilter();
 
         $text = <<<EOD
@@ -404,6 +407,8 @@ EOD;
      */
     public function testYamlFrontMatterException()
     {
+        //$this->expectException(Exception::class);
+
         if (!function_exists("yaml_parse")) {
             return;
         }
@@ -415,7 +420,8 @@ EOD;
 
 ---
 EOD;
-        $filter->parse($text, ["yamlfrontmatter"]);
+        $res = $filter->parse($text, ["yamlfrontmatter"]);
+        $this->assertFalse($res);
     }
 
 
@@ -550,9 +556,12 @@ EOD;
      */
     public function testHasFilterException()
     {
+        //$this->expectException(Exception::class);
+
         $filter = new CTextFilter();
 
-        $filter->hasFilter("NOT EXISTING");
+        $res = $filter->hasFilter("NOT EXISTING");
+        $this->assertFalse($res);
     }
 
 
@@ -739,7 +748,7 @@ EOD;
 
         $src = "/img/me.png";
         $caption = "This is me.";
-        
+
         $html = <<<EOD
 [FIGURE src=$src caption="$caption"]
 EOD;
@@ -765,6 +774,7 @@ EOD;
      */
     public function testDoItException()
     {
+        $this->expectException(Exception::class);
         $filter = new CTextFilter();
         $filter->doFilter("void", "no-such-filter");
     }

@@ -2,11 +2,13 @@
 
 namespace Mos\TextFilter;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * A testclass
  *
  */
-class CTextFilterUtilitiesTest extends \PHPUnit_Framework_TestCase
+class CTextFilterUtilitiesTest extends TestCase
 {
     /**
      * Provider for TextWithLinks
