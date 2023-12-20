@@ -179,10 +179,12 @@ EOD;
 
         // @codingStandardsIgnoreStart
         $html = <<<EOD
+<div class="embed-container">
 <figure{$id}{$class}>
 <iframe width="$width" height="$height" src="https://www.youtube.com/embed/{$src}{$list}{$time}" frameborder="0" allowfullscreen></iframe>
 {$caption}
 </figure>
+</div>
 EOD;
         // @codingStandardsIgnoreEnd
 
